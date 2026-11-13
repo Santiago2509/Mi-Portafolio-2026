@@ -122,6 +122,9 @@ export default function Hero({ ready }: { ready: boolean }) {
         <p className="hero-fade mt-3 font-display text-lg uppercase tracking-wide text-blood md:text-2xl">
           {profile.role}
         </p>
+        <p className="hero-fade mt-1 text-[11px] uppercase tracking-[0.3em] text-bone/50">
+          {profile.specialties.join(" · ")}
+        </p>
         <p className="hero-fade mt-3 hidden text-sm leading-relaxed text-bone/60 md:block">{profile.tagline}</p>
         <button
           onClick={() => scrollToId("proyectos")}
@@ -149,8 +152,7 @@ export default function Hero({ ready }: { ready: boolean }) {
       </div>
 
       {/* Top labels */}
-      <div className="hero-side absolute inset-x-0 top-[72px] z-10 hidden justify-between px-10 text-[11px] uppercase tracking-[0.3em] text-bone/50 md:flex">
-        <span className="hero-fade">{profile.role}</span>
+      <div className="hero-side absolute inset-x-0 top-[72px] z-10 hidden justify-end px-10 text-[11px] uppercase tracking-[0.3em] text-bone/50 md:flex">
         <span className="hero-fade">{profile.location} · 2026</span>
       </div>
 

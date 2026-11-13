@@ -8,9 +8,11 @@ export const profile = {
   name: "Santiago",
   lastName: "", // TODO: tu apellido si quieres mostrarlo
   heroWord: "SANTIAGO",
-  role: "Desarrollador & Diseñador Creativo", // TODO
+  role: "Ingeniero de Software",
+  // Habilidades complementarias (se muestran como línea secundaria)
+  specialties: ["Full-stack", "Web", "UI", "3D"],
   tagline:
-    "Construyo experiencias digitales con actitud: código limpio, diseño que se siente y animaciones que no se olvidan.",
+    "Diseño y construyo software de punta a punta: arquitectura sólida, código limpio y productos que la gente disfruta usar.",
   location: "Colombia", // TODO
   available: true,
   email: "hola@tudominio.com", // TODO
@@ -23,7 +25,7 @@ export const profile = {
 };
 
 export const stats = [
-  { value: 3, suffix: "+", label: "Años creando" }, // TODO
+  { value: 3, suffix: "+", label: "Años programando" }, // TODO
   { value: 20, suffix: "+", label: "Proyectos" }, // TODO
   { value: 100, suffix: "%", label: "Actitud" },
 ];
@@ -31,10 +33,10 @@ export const stats = [
 export const about = {
   kicker: "Así soy yo",
   statement:
-    "Sin gafas, sin pose. Soy alguien que se obsesiona con los detalles, que aprende rápido y que convierte ideas en productos reales. Me gusta que lo que hago se vea bien, pero sobre todo que funcione.",
+    "Sin gafas, sin pose. Soy ingeniero de software: me obsesionan los detalles, aprendo rápido y convierto problemas en productos reales. Me gusta que lo que construyo se vea bien, pero sobre todo que funcione.",
   facts: [
     { k: "Base", v: "Colombia" }, // TODO
-    { k: "Enfoque", v: "Web · UI · Motion" },
+    { k: "Profesión", v: "Ingeniero de Software" },
     { k: "Ahora", v: "Abierto a proyectos" },
   ],
 };
@@ -112,16 +114,16 @@ export const skills = [
 
 // Píldoras con física (lo que hago)
 export const services = [
-  "Desarrollo web",
+  "Arquitectura de software",
+  "Full-stack",
+  "APIs & Backend",
+  "Bases de datos",
+  "Cloud & Deploy",
+  "Testing",
+  "Performance",
   "UI Design",
   "Animaciones",
-  "Landing pages",
-  "E-commerce",
   "Experiencias 3D",
-  "Branding digital",
-  "Responsive",
-  "Performance",
-  "Prototipos",
 ];
 
 export const workProcess = [
@@ -134,8 +136,8 @@ export const workProcess = [
 
 // TODO: tu experiencia / estudios reales
 export const timeline = [
-  { period: "2025 — Ahora", title: "Desarrollador Freelance", place: "Independiente", now: true },
-  { period: "2023 — 2025", title: "Estudios en Desarrollo de Software", place: "Tu institución" },
+  { period: "2025 — Ahora", title: "Ingeniero de Software Freelance", place: "Independiente", now: true },
+  { period: "2023 — 2025", title: "Ingeniería de Software", place: "Tu institución" },
   { period: "2023", title: "Certificación UI/UX", place: "Plataforma online" },
 ];
 

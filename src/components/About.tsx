@@ -53,7 +53,7 @@ export default function About() {
     return () => ctx.revert();
   }, []);
 
-  const highlight = new Set(["detalles,", "productos", "reales.", "funcione."]);
+  const highlight = new Set(["ingeniero", "software:", "productos", "reales.", "funcione."]);
 
   return (
     <section ref={root} id="sobre-mi" className="relative bg-ink px-5 pb-24 pt-32 md:px-10 md:pb-40 md:pt-48">

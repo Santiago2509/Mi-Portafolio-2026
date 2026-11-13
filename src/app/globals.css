@@ -64,17 +64,11 @@ body {
   color: transparent;
 }
 
-.marquee-track {
-  animation: marquee 28s linear infinite;
-}
-@keyframes marquee {
-  to { transform: translateX(-50%); }
-}
 
 @media (hover: hover) and (pointer: fine) {
   .has-cursor, .has-cursor * { cursor: none !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .marquee-track, .grain::after { animation: none; }
+  .grain::after { animation: none; }
 }
