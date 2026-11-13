@@ -24,10 +24,11 @@ export const profile = {
   ],
 };
 
+// Se muestran en la sección "Experiencia"
 export const stats = [
   { value: 3, suffix: "+", label: "Años programando" }, // TODO
-  { value: 20, suffix: "+", label: "Proyectos" }, // TODO
-  { value: 100, suffix: "%", label: "Actitud" },
+  { value: 20, suffix: "+", label: "Proyectos construidos" }, // TODO
+  { value: 30, suffix: "+", label: "Tecnologías" },
 ];
 
 export const about = {
@@ -60,7 +61,7 @@ export const projects: Project[] = [
     year: "2026",
     description: "Tienda de moda urbana con checkout rápido y catálogo animado.",
     tags: ["Next.js", "Stripe", "GSAP"],
-    accent: "#e10600",
+    accent: "#6d4dff",
   },
   {
     title: "Pulse",
@@ -68,7 +69,7 @@ export const projects: Project[] = [
     year: "2025",
     description: "Panel de métricas en tiempo real con visualizaciones a medida.",
     tags: ["React", "D3", "Node"],
-    accent: "#ff5a1f",
+    accent: "#3b82f6",
   },
   {
     title: "Eclipse",
@@ -76,7 +77,7 @@ export const projects: Project[] = [
     year: "2025",
     description: "Lanzamiento de producto con escena 3D interactiva en el navegador.",
     tags: ["Three.js", "R3F", "Blender"],
-    accent: "#b0001a",
+    accent: "#8b5cf6",
   },
   {
     title: "Ritmo",
@@ -84,7 +85,7 @@ export const projects: Project[] = [
     year: "2024",
     description: "App para descubrir eventos y música en tu ciudad.",
     tags: ["React Native", "Firebase"],
-    accent: "#ff2a1f",
+    accent: "#4f46e5",
   },
 ];
 
@@ -126,22 +127,39 @@ export const services = [
   "Experiencias 3D",
 ];
 
-export const workProcess = [
-  { title: "Descubrir", text: "Entiendo el objetivo, la audiencia y lo que hace falta." },
-  { title: "Idear", text: "Bocetos, estructura y la idea que lo hace distinto." },
-  { title: "Diseñar", text: "Interfaces con carácter, pensadas para usarse." },
-  { title: "Desarrollar", text: "Código rápido, accesible y responsive." },
-  { title: "Lanzar", text: "Pruebo, optimizo y lo pongo en el mundo." },
-];
-
-// TODO: tu experiencia / estudios reales
+// TODO: tu experiencia y estudios reales
 export const timeline = [
-  { period: "2025 — Ahora", title: "Ingeniero de Software Freelance", place: "Independiente", now: true },
-  { period: "2023 — 2025", title: "Ingeniería de Software", place: "Tu institución" },
-  { period: "2023", title: "Certificación UI/UX", place: "Plataforma online" },
+  {
+    period: "2025 — Ahora",
+    title: "Ingeniero de Software Freelance",
+    place: "Independiente",
+    now: true,
+    text: "Diseño y desarrollo productos web de punta a punta: desde la arquitectura y la base de datos hasta la interfaz y el despliegue.",
+    tags: ["Full-stack", "Arquitectura", "Cloud"],
+  },
+  {
+    period: "2024 — 2025",
+    title: "Desarrollador Full-stack",
+    place: "Nombre de la empresa",
+    text: "Construcción de APIs, integración de servicios y desarrollo de interfaces para aplicaciones en producción.",
+    tags: ["APIs", "React", "SQL"],
+  },
+  {
+    period: "2021 — 2025",
+    title: "Ingeniería de Software",
+    place: "Tu universidad",
+    text: "Formación en ingeniería: algoritmos, estructuras de datos, bases de datos, arquitectura y gestión de proyectos de software.",
+    tags: ["Pregrado"],
+  },
 ];
 
-export const quote = {
-  text: "El buen diseño no es solo cómo se ve, es cómo se siente.",
-  signature: "Santiago",
-};
+// Todas las herramientas (sección "Ver todas"). "icon" = nombre en src/data/icons.ts
+// TODO: deja solo las que usas de verdad
+export const toolbox = [
+  { category: "Lenguajes", items: ["javascript", "typescript", "python", "java", "cpp", "csharp", "kotlin", "php", "go"] },
+  { category: "Frontend", items: ["react", "nextjs", "html", "css", "tailwind", "sass", "redux", "vue", "angular", "gsap", "three", "framer"] },
+  { category: "Backend", items: ["node", "express", "nestjs", "spring", "django", "fastapi", "laravel", "graphql"] },
+  { category: "Bases de datos", items: ["mysql", "postgresql", "mongodb", "redis", "sqlite", "firebase", "supabase", "prisma"] },
+  { category: "Cloud & DevOps", items: ["docker", "kubernetes", "githubactions", "nginx", "vercel", "googlecloud", "linux"] },
+  { category: "Herramientas", items: ["git", "github", "figma", "postman", "jest", "vite", "npm", "jira", "notion", "swagger"] },
+];

@@ -47,15 +47,15 @@ export default function Cursor() {
   return (
     <>
       <div ref={dot} className="pointer-events-none fixed left-0 top-0 z-[100]">
-        <div className="-translate-x-1/2 -translate-y-1/2 h-1.5 w-1.5 rounded-full bg-flame" />
+        <div className="-translate-x-1/2 -translate-y-1/2 h-1.5 w-1.5 rounded-full bg-glow" />
       </div>
       <div ref={ring} className="pointer-events-none fixed left-0 top-0 z-[99]">
         <div
           className={`-translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full border transition-[width,height,background-color,border-color] duration-300 ease-out ${
             label
-              ? "h-20 w-20 border-blood bg-blood"
+              ? "h-20 w-20 border-accent bg-accent"
               : hover
-                ? "h-14 w-14 border-flame bg-flame/10"
+                ? "h-14 w-14 border-glow bg-glow/10"
                 : "h-9 w-9 border-bone/40"
           }`}
         >

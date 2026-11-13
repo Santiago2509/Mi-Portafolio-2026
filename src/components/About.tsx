@@ -60,9 +60,9 @@ export default function About() {
       <div className="mx-auto grid max-w-[1400px] items-center gap-14 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-20">
         {/* Photo */}
         <div className="relative mx-auto w-full max-w-[460px]">
-          <div className="absolute -left-4 -top-4 h-full w-full border border-blood/60 md:-left-6 md:-top-6" />
-          <div className="about-frame relative aspect-[4/5] overflow-hidden bg-gradient-to-b from-ash via-wine/70 to-blood">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(255,42,31,0.35),transparent_60%)]" />
+          <div className="absolute -left-4 -top-4 h-full w-full border border-accent/60 md:-left-6 md:-top-6" />
+          <div className="about-frame relative aspect-[4/5] overflow-hidden bg-gradient-to-b from-ash via-deep/70 to-accent">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(169,149,255,0.35),transparent_60%)]" />
             <span className="absolute left-4 top-3 font-display text-[22vw] leading-none text-ink/25 md:text-[9rem]">
               REAL
             </span>
@@ -76,19 +76,19 @@ export default function About() {
               />
             </div>
           </div>
-          <p className="absolute -bottom-8 right-0 font-script text-4xl text-flame md:-right-8 md:text-5xl">
+          <p className="absolute -bottom-8 right-0 font-script text-4xl text-glow md:-right-8 md:text-5xl">
             sin filtros
           </p>
         </div>
 
         {/* Text */}
         <div>
-          <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-blood">
-            <span className="h-px w-10 bg-blood" /> 01 · {about.kicker}
+          <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-glow">
+            <span className="h-px w-10 bg-accent" /> 01 · {about.kicker}
           </p>
           <p className="about-statement font-display text-[2.1rem] uppercase leading-[1.05] md:text-6xl">
             {about.statement.split(" ").map((w, i) => (
-              <span key={i} className={`about-word ${highlight.has(w) ? "text-blood" : "text-bone"}`}>
+              <span key={i} className={`about-word ${highlight.has(w) ? "text-glow" : "text-bone"}`}>
                 {w}{" "}
               </span>
             ))}

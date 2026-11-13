@@ -73,11 +73,11 @@ export default function Contact() {
 
   return (
     <section ref={root} id="contacto" className="relative overflow-hidden bg-ink px-5 pt-24 md:px-10 md:pt-36">
-      <div className="pointer-events-none absolute bottom-0 right-0 h-[70vmin] w-[70vmin] translate-x-1/4 rounded-full bg-blood/25 blur-[140px]" />
+      <div className="pointer-events-none absolute bottom-0 right-0 h-[70vmin] w-[70vmin] translate-x-1/4 rounded-full bg-accent/25 blur-[140px]" />
       <div className="relative mx-auto grid max-w-[1400px] gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
         <div>
-          <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-blood">
-            <span className="h-px w-10 bg-blood" /> 06 · Contacto
+          <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-glow">
+            <span className="h-px w-10 bg-accent" /> 05 · Contacto
           </p>
           <h2 className="contact-title font-display text-[17vw] uppercase leading-[0.85] lg:text-[9vw]">
             <span className="contact-line block overflow-hidden">
@@ -85,7 +85,7 @@ export default function Contact() {
             </span>
             <span className="contact-line block overflow-hidden">
               <span className="block">
-                algo <span className="font-serif normal-case italic text-blood">épico</span>
+                algo <span className="font-serif normal-case italic text-glow">épico</span>
               </span>
             </span>
           </h2>
@@ -98,7 +98,7 @@ export default function Contact() {
               <a
                 href={`mailto:${profile.email}`}
                 data-cursor="Hola"
-                className="flex h-36 w-36 items-center justify-center rounded-full bg-blood text-center font-display text-xl uppercase leading-tight text-bone transition-colors hover:bg-bone hover:text-ink md:h-44 md:w-44 md:text-2xl"
+                className="flex h-36 w-36 items-center justify-center rounded-full bg-accent text-center font-display text-xl uppercase leading-tight text-bone transition-colors hover:bg-bone hover:text-ink md:h-44 md:w-44 md:text-2xl"
               >
                 Escríbeme
                 <br />↗
@@ -111,7 +111,7 @@ export default function Contact() {
               <li key={r.k} className="flex items-center justify-between py-5">
                 <span className="text-[11px] uppercase tracking-[0.25em] text-mute">{r.k}</span>
                 {r.href ? (
-                  <a href={r.href} className="text-lg text-bone transition-colors hover:text-blood md:text-xl">
+                  <a href={r.href} className="text-lg text-bone transition-colors hover:text-glow md:text-xl">
                     {r.v}
                   </a>
                 ) : (
@@ -131,7 +131,7 @@ export default function Contact() {
                     className="group relative text-sm uppercase tracking-[0.2em] text-bone"
                   >
                     {s.label}
-                    <span className="absolute -bottom-1 left-0 h-px w-0 bg-blood transition-all group-hover:w-full" />
+                    <span className="absolute -bottom-1 left-0 h-px w-0 bg-accent transition-all group-hover:w-full" />
                   </a>
                 ))}
               </div>
@@ -157,12 +157,12 @@ export default function Contact() {
         <div className="flex flex-wrap items-center justify-between gap-4 border-t border-bone/10 py-6 text-[11px] uppercase tracking-[0.25em] text-bone/50">
           <span>© 2026 {profile.name}</span>
           <span>Hecho con código y actitud</span>
-          <button onClick={() => scrollToId("inicio")} className="transition-colors hover:text-blood">
+          <button onClick={() => scrollToId("inicio")} className="transition-colors hover:text-glow">
             Volver arriba ↑
           </button>
         </div>
         <div className="overflow-hidden">
-          <p className="footer-word select-none text-center font-display text-[24vw] uppercase leading-[0.78] text-blood">
+          <p className="footer-word select-none text-center font-display text-[24vw] uppercase leading-[0.78] text-glow">
             {profile.heroWord}
           </p>
         </div>

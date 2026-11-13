@@ -98,7 +98,7 @@ export default function PhysicsPills({ items }: { items: string[] }) {
             pills.current[i] = n;
           }}
           className={`absolute left-0 top-0 cursor-grab whitespace-nowrap rounded-full px-6 py-3 font-display text-lg uppercase tracking-wide opacity-0 active:cursor-grabbing md:px-8 md:py-4 md:text-2xl ${
-            i % 3 === 0 ? "bg-blood text-bone" : i % 3 === 1 ? "bg-bone text-ink" : "border border-bone/40 bg-ink text-bone"
+            i % 3 === 0 ? "bg-accent text-bone" : i % 3 === 1 ? "bg-bone text-ink" : "border border-bone/40 bg-ink text-bone"
           }`}
         >
           {t}

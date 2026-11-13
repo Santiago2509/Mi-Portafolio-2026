@@ -6,27 +6,29 @@ import Loader from "./Loader";
 import Navbar from "./Navbar";
 import Hero from "./Hero";
 import About from "./About";
+import Journey from "./Journey";
 import Projects from "./Projects";
 import Skills from "./Skills";
-import Journey from "./Journey";
 import Contact from "./Contact";
 
 export default function Experience() {
-  const [ready, setReady] = useState(false);
-  const done = useCallback(() => setReady(true), []);
+  const [revealed, setRevealed] = useState(false); // loader started opening → hero animates in
+  const [loaderGone, setLoaderGone] = useState(false);
+  const reveal = useCallback(() => setRevealed(true), []);
+  const done = useCallback(() => setLoaderGone(true), []);
 
   return (
     <div className="grain">
-      <SmoothScroll locked={!ready} />
+      <SmoothScroll locked={!loaderGone} />
       <Cursor />
-      {!ready && <Loader onDone={done} />}
+      {!loaderGone && <Loader onReveal={reveal} onDone={done} />}
       <Navbar />
       <main>
-        <Hero ready={ready} />
+        <Hero ready={revealed} />
         <About />
+        <Journey />
         <Projects />
         <Skills />
-        <Journey />
         <Contact />
       </main>
     </div>

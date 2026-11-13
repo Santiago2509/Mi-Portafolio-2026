@@ -10,8 +10,8 @@ function Visual({ p, i }: { p: Project; i: number }) {
   }
   // Placeholder art until real screenshots exist
   return (
-    <div className="absolute inset-0 overflow-hidden" style={{ background: `radial-gradient(circle at 70% 30%, ${p.accent}, #0a0a0a 70%)` }}>
-      <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(#f2efea22_1px,transparent_1px),linear-gradient(90deg,#f2efea22_1px,transparent_1px)] [background-size:40px_40px]" />
+    <div className="absolute inset-0 overflow-hidden" style={{ background: `radial-gradient(circle at 70% 30%, ${p.accent}, #07060b 70%)` }}>
+      <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(#f1eff722_1px,transparent_1px),linear-gradient(90deg,#f1eff722_1px,transparent_1px)] [background-size:40px_40px]" />
       <span className="absolute -bottom-6 -left-2 font-display text-[9rem] uppercase leading-none text-bone/90 md:text-[12rem]">
         {p.title}
       </span>
@@ -65,13 +65,13 @@ export default function Projects() {
       <div ref={track} className="flex flex-col gap-16 px-5 py-24 md:h-full md:w-max md:flex-row md:items-center md:gap-10 md:px-10 md:py-0">
         {/* Intro panel */}
         <div className="flex shrink-0 flex-col justify-center md:w-[38vw] md:pr-10">
-          <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-blood">
-            <span className="h-px w-10 bg-blood" /> 02 · Proyectos
+          <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-glow">
+            <span className="h-px w-10 bg-accent" /> 03 · Proyectos
           </p>
           <h2 className="font-display text-6xl uppercase leading-[0.9] md:text-[7vw]">
             Trabajo que
             <br />
-            <span className="font-serif normal-case italic text-blood">habla</span> solo
+            <span className="font-serif normal-case italic text-glow">habla</span> solo
           </h2>
           <p className="mt-6 max-w-sm text-sm leading-relaxed text-bone/60">
             Una selección de lo que he construido. Desliza para ver cada uno.
@@ -94,11 +94,11 @@ export default function Projects() {
               <div className="project-visual absolute inset-0 transition-transform duration-700 group-hover:scale-105">
                 <Visual p={p} i={i} />
               </div>
-              <div className="absolute inset-0 bg-blood/0 mix-blend-multiply transition-colors duration-500 group-hover:bg-blood/30" />
+              <div className="absolute inset-0 bg-accent/0 mix-blend-multiply transition-colors duration-500 group-hover:bg-accent/30" />
             </div>
             <div className="mt-5 flex items-start justify-between gap-6 border-b border-bone/10 pb-5">
               <div className="flex items-start gap-5">
-                <span className="font-display text-4xl text-blood">0{i + 1}</span>
+                <span className="font-display text-4xl text-glow">0{i + 1}</span>
                 <div>
                   <h3 className="font-display text-2xl uppercase tracking-wide">{p.title}</h3>
                   <p className="text-xs uppercase tracking-[0.2em] text-mute">
@@ -114,7 +114,7 @@ export default function Projects() {
                   </div>
                 </div>
               </div>
-              <span className="text-2xl text-bone/60 transition-all duration-300 group-hover:-rotate-45 group-hover:text-blood">→</span>
+              <span className="text-2xl text-bone/60 transition-all duration-300 group-hover:-rotate-45 group-hover:text-glow">→</span>
             </div>
           </a>
         ))}

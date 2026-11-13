@@ -5,8 +5,9 @@ import { scrollToId } from "./SmoothScroll";
 
 const links = [
   { id: "sobre-mi", label: "Sobre mí" },
+  { id: "experiencia", label: "Experiencia" },
   { id: "proyectos", label: "Proyectos" },
-  { id: "skills", label: "Skills" },
+  { id: "skills", label: "Herramientas" },
   { id: "contacto", label: "Contacto" },
 ];
 
@@ -36,7 +37,7 @@ export default function Navbar() {
         <nav className="mx-auto flex max-w-[1600px] items-center justify-between px-5 py-4 md:px-10">
           <button onClick={() => go("inicio")} className="group flex items-baseline gap-1" aria-label="Inicio">
             <span className="font-display text-2xl tracking-tight text-bone">{profile.name.charAt(0)}</span>
-            <span className="h-2 w-2 rounded-full bg-blood transition-transform duration-300 group-hover:scale-150" />
+            <span className="h-2 w-2 rounded-full bg-accent transition-transform duration-300 group-hover:scale-150" />
           </button>
 
           <ul className="hidden items-center gap-10 md:flex">
@@ -47,7 +48,7 @@ export default function Navbar() {
                   className="group relative text-xs uppercase tracking-[0.25em] text-bone/80 transition-colors hover:text-bone"
                 >
                   {l.label}
-                  <span className="absolute -bottom-1 left-0 h-px w-0 bg-blood transition-all duration-300 group-hover:w-full" />
+                  <span className="absolute -bottom-1 left-0 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full" />
                 </button>
               </li>
             ))}
@@ -57,8 +58,8 @@ export default function Navbar() {
             {profile.available && (
               <span className="hidden items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-bone/70 sm:flex">
                 <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-flame opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-blood" />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-glow opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
                 </span>
                 Disponible
               </span>
@@ -77,7 +78,7 @@ export default function Navbar() {
       </header>
 
       <div
-        className={`fixed inset-0 z-40 flex flex-col justify-center gap-4 bg-blood px-8 transition-[clip-path] duration-700 ease-[cubic-bezier(.77,0,.18,1)] md:hidden ${
+        className={`fixed inset-0 z-40 flex flex-col justify-center gap-4 bg-accent px-8 transition-[clip-path] duration-700 ease-[cubic-bezier(.77,0,.18,1)] md:hidden ${
           open ? "[clip-path:circle(150%_at_100%_0)]" : "[clip-path:circle(0%_at_100%_0)]"
         }`}
       >
