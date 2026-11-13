@@ -86,20 +86,28 @@ export const projects: Project[] = [
   },
 ];
 
-// Teclas del teclado 3D (texto corto + frase al pulsarla)
+// Teclas del teclado 3D: "icon" es el nombre en src/data/icons.ts
 export const skills = [
-  { key: "JS", name: "JavaScript", line: "El idioma con el que pienso." },
-  { key: "TS", name: "TypeScript", line: "Tipos que me salvan a las 3 a.m." },
-  { key: "React", name: "React", line: "Componentes con alma." },
-  { key: "Next", name: "Next.js", line: "Rápido, SEO y a producción." },
-  { key: "Node", name: "Node.js", line: "El backend también es mío." },
-  { key: "CSS", name: "CSS / Tailwind", line: "Píxeles en su sitio." },
-  { key: "GSAP", name: "GSAP", line: "Movimiento con intención." },
-  { key: "3D", name: "Three.js", line: "Profundidad en el navegador." },
-  { key: "Figma", name: "Figma", line: "Donde nace cada idea." },
-  { key: "Git", name: "Git", line: "Cada cambio, bajo control." },
-  { key: "SQL", name: "SQL", line: "Datos ordenados, decisiones claras." },
-  { key: "Py", name: "Python", line: "Scripts, datos y automatización." },
+  { icon: "javascript", name: "JavaScript", line: "El idioma con el que pienso." },
+  { icon: "typescript", name: "TypeScript", line: "Tipos que me salvan a las 3 a.m." },
+  { icon: "react", name: "React", line: "Componentes con alma." },
+  { icon: "nextjs", name: "Next.js", line: "Rápido, SEO y a producción." },
+  { icon: "node", name: "Node.js", line: "El backend también es mío." },
+  { icon: "html", name: "HTML5", line: "La base de todo lo que construyo." },
+  { icon: "css", name: "CSS", line: "Píxeles exactamente en su sitio." },
+  { icon: "tailwind", name: "Tailwind CSS", line: "Estilos a la velocidad de la idea." },
+  { icon: "gsap", name: "GSAP", line: "Movimiento con intención." },
+  { icon: "three", name: "Three.js", line: "Profundidad en el navegador." },
+  { icon: "figma", name: "Figma", line: "Donde nace cada idea." },
+  { icon: "git", name: "Git", line: "Cada cambio, bajo control." },
+  { icon: "github", name: "GitHub", line: "Mi código, a la vista." },
+  { icon: "python", name: "Python", line: "Scripts, datos y automatización." },
+  { icon: "mysql", name: "MySQL", line: "Datos ordenados, decisiones claras." },
+  { icon: "mongodb", name: "MongoDB", line: "Datos flexibles para apps flexibles." },
+  { icon: "firebase", name: "Firebase", line: "Del prototipo a producción en horas." },
+  { icon: "docker", name: "Docker", line: "Funciona en mi máquina… y en todas." },
+  { icon: "vite", name: "Vite", line: "Arranque instantáneo." },
+  { icon: "vercel", name: "Vercel", line: "Deploy en un git push." },
 ]; // TODO: ajusta a tus tecnologías
 
 // Píldoras con física (lo que hago)

@@ -16,7 +16,7 @@ export default function Loader({ onDone }: { onDone: () => void }) {
 
     // Wait for the hero image so the reveal shows a finished frame
     const img = new Image();
-    img.src = "/images/hero.webp";
+    img.src = "/images/hero-portrait.webp";
     const imgReady = img.decode().catch(() => undefined);
 
     tl.to(counter, {

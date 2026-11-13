@@ -96,7 +96,7 @@ export default function Hero({ ready }: { ready: boolean }) {
       >
         <div className="hero-photo-inner relative h-full w-full">
           <Image
-            src="/images/hero.webp"
+            src="/images/hero-portrait.webp"
             alt={`${profile.name} con gafas de sol, retrato en blanco y negro con luz roja`}
             fill
             priority
