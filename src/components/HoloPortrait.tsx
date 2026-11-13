@@ -92,17 +92,11 @@ function sample(img: HTMLImageElement, cols: number): Sampled {
 }
 
 const MASK_GLSL = /* glsl */ `
-  uniform vec2 uMouse;
-  uniform float uLensR;
-  uniform float uLensOn;
   uniform float uReveal;
   float scanLine() { return mix(1.25, -1.25, uReveal); }
-  // 1 = human photo, 0 = hologram
+  // 1 = human photo, 0 = hologram. A scan line sweeps down as the visitor scrolls.
   float humanMask(vec2 p) {
-    float d = distance(p, uMouse);
-    float lens = (1.0 - smoothstep(uLensR * 0.82, uLensR, d)) * uLensOn;
-    float sweep = smoothstep(scanLine() - 0.02, scanLine() + 0.02, p.y);
-    return max(lens, sweep);
+    return smoothstep(scanLine() - 0.02, scanLine() + 0.02, p.y);
   }
 `;
 
@@ -120,7 +114,7 @@ const pointsVert = /* glsl */ `
   varying float vLum;
   void main() {
     vec3 p = position;
-    p.z = aDepth * uDepth + sin(p.y * 18.0 - uTime * 1.6 + aRand.x) * 0.012;
+    p.z = aDepth * uDepth;
 
     // fly in from a scattered cloud
     float t = clamp((uAssemble - aRand.y * 0.4) / 0.6, 0.0, 1.0);
@@ -132,12 +126,8 @@ const pointsVert = /* glsl */ `
     // travelling highlight + glow at the scan front
     float band = 1.0 - smoothstep(0.0, 0.07, abs(position.y - (1.15 - mod(uTime * 0.42, 2.9))));
     float front = (1.0 - smoothstep(0.0, 0.14, abs(position.y - scanLine()))) * step(0.002, uReveal);
-    // points near the lens rim get pushed out a little
-    float rim = (1.0 - smoothstep(uLensR, uLensR * 1.5, distance(position.xy, uMouse))) * uLensOn * (1.0 - mask);
-    p.z += rim * 0.12 + front * 0.1;
-
-    vLum = aLum + band * 0.7 + front * 1.4 + rim * 0.5;
-    vA = aAlpha * (1.0 - mask) * t * (0.42 + aLum * 0.95 + band * 0.5 + front + rim * 0.4);
+    vLum = aLum + band * 0.7 + front * 1.4;
+    vA = aAlpha * (1.0 - mask) * t * (0.42 + aLum * 0.95 + band * 0.5 + front);
 
     vec4 mv = modelViewMatrix * vec4(p, 1.0);
     gl_Position = projectionMatrix * mv;
@@ -180,11 +170,9 @@ const photoFrag = /* glsl */ `
   void main() {
     vec4 tex = texture2D(uMap, vUv);
     float mask = humanMask(vP);
-    // glowing rim on the lens and on the scan front
-    float d = distance(vP, uMouse);
-    float ring = (1.0 - smoothstep(0.0, 0.03, abs(d - uLensR * 0.9))) * uLensOn * (1.0 - smoothstep(0.75, 1.0, uReveal));
+    // glow on the scan front
     float front = (1.0 - smoothstep(0.0, 0.03, abs(vP.y - scanLine()))) * step(0.002, uReveal) * step(uReveal, 0.999);
-    vec3 col = tex.rgb + (ring * 0.55 + front * 0.9) * vec3(0.62, 0.5, 1.0);
+    vec3 col = tex.rgb + front * 0.9 * vec3(0.62, 0.5, 1.0);
     float a = tex.a * mask * smoothstep(0.6, 1.0, uAssemble);
     gl_FragColor = vec4(col, a);
     #include <colorspace_fragment>
@@ -205,11 +193,6 @@ function Scene({
   const group = useRef<THREE.Group>(null);
   const { camera, size, gl } = useThree();
   const assemble = useRef(0);
-  const lastMove = useRef(-10);
-  const lensOn = useRef(0);
-  const mouse = useRef(new THREE.Vector2(0.05, 0.25));
-  const prevPointer = useRef(new THREE.Vector2(9, 9));
-  const ray = useMemo(() => new THREE.Raycaster(), []);
 
   const uniforms = useMemo(
     () => ({
@@ -218,9 +201,6 @@ function Scene({
       uReveal: { value: 0 },
       uDepth: { value: 0.42 },
       uSize: { value: 10 },
-      uMouse: { value: new THREE.Vector2(0.05, 0.25) },
-      uLensR: { value: 0.3 },
-      uLensOn: { value: 0 },
       uMap: { value: data.photo },
       uDepthMap: { value: data.depthMap },
     }),
@@ -290,39 +270,6 @@ function Scene({
     if (ready) assemble.current = Math.min(1, assemble.current + dt / 2.4);
     uniforms.uAssemble.value = assemble.current;
     uniforms.uReveal.value = THREE.MathUtils.damp(uniforms.uReveal.value, revealRef.current, 8, dt);
-
-    // pointer → portrait plane coordinates
-    const moved = prevPointer.current.distanceToSquared(state.pointer) > 1e-6;
-    if (moved) {
-      if (prevPointer.current.x < 5) lastMove.current = t;
-      prevPointer.current.copy(state.pointer);
-    }
-    const idle = t - lastMove.current > 3.5;
-    const target = new THREE.Vector2();
-    if (idle) {
-      // no input: the lens wanders over the face on its own
-      target.set(0.02 + Math.sin(t * 0.7) * 0.26, 0.22 + Math.sin(t * 1.1 + 1.0) * 0.2);
-    } else if (group.current) {
-      ray.setFromCamera(state.pointer, camera);
-      const k = (0.2 - ray.ray.origin.z) / ray.ray.direction.z;
-      target.set(
-        ray.ray.origin.x + ray.ray.direction.x * k - group.current.position.x,
-        ray.ray.origin.y + ray.ray.direction.y * k - group.current.position.y,
-      );
-    }
-    mouse.current.x = THREE.MathUtils.damp(mouse.current.x, target.x, idle ? 2 : 9, dt);
-    mouse.current.y = THREE.MathUtils.damp(mouse.current.y, target.y, idle ? 2 : 9, dt);
-    uniforms.uMouse.value.copy(mouse.current);
-    lensOn.current = THREE.MathUtils.damp(lensOn.current, assemble.current > 0.95 ? 1 : 0, 3, dt);
-    uniforms.uLensOn.value = lensOn.current;
-    uniforms.uLensR.value = (mobile ? 0.26 : 0.3) + Math.sin(t * 2.0) * 0.012;
-
-    if (group.current) {
-      const px = idle ? Math.sin(t * 0.5) * 0.35 : state.pointer.x;
-      const py = idle ? 0 : state.pointer.y;
-      group.current.rotation.y = THREE.MathUtils.damp(group.current.rotation.y, px * 0.26, 3, dt);
-      group.current.rotation.x = THREE.MathUtils.damp(group.current.rotation.x, -py * 0.12, 3, dt);
-    }
   });
 
   return (
@@ -386,8 +333,6 @@ export default function HoloPortrait({
         camera={{ fov: 30, near: 0.1, far: 50, position: [0, 0, 4] }}
         gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
         frameloop={visible ? "always" : "never"}
-        eventSource={eventSource}
-        eventPrefix="client"
       >
         {data && <Scene data={data} ready={ready} revealRef={revealRef} mobile={mobile} />}
       </Canvas>

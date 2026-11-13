@@ -10,6 +10,7 @@ import Journey from "./Journey";
 import Projects from "./Projects";
 import Skills from "./Skills";
 import Contact from "./Contact";
+import Network from "./Network";
 
 export default function Experience() {
   const [revealed, setRevealed] = useState(false); // loader started opening → hero animates in
@@ -21,6 +22,7 @@ export default function Experience() {
     <div className="grain">
       <SmoothScroll locked={!loaderGone} />
       <Cursor />
+      <Network />
       {!loaderGone && <Loader onReveal={reveal} onDone={done} />}
       <Navbar />
       <main>

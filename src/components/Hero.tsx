@@ -4,6 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "@/lib/gsap";
 import { profile } from "@/data/content";
 import { scrollToId } from "./SmoothScroll";
+import { holo } from "@/lib/holo";
 
 const HoloPortrait = dynamic(() => import("./HoloPortrait"), { ssr: false });
 
@@ -30,12 +31,13 @@ export default function Hero({ ready }: { ready: boolean }) {
           scrollTrigger: {
             trigger: root.current,
             start: "top top",
-            end: "+=110%",
+            end: "+=140%",
             pin: true,
             scrub: true,
             onUpdate: (self) => {
-              const r = gsap.utils.clamp(0, 1, self.progress / 0.75);
+              const r = gsap.utils.clamp(0, 1, self.progress / 0.6);
               reveal.current = r;
+              holo.reveal = r; // the page-wide network bursts out at 1
               if (pct.current) pct.current.textContent = String(Math.round(r * 100)).padStart(3, "0");
               if (bar.current) bar.current.style.transform = `scaleX(${r})`;
               if (mode.current) mode.current.textContent = r >= 1 ? "Humano" : r > 0.01 ? "Transformando" : "Máquina";
@@ -151,7 +153,7 @@ export default function Hero({ ready }: { ready: boolean }) {
           <span ref={bar} className="block h-px w-full origin-left scale-x-0 bg-glow shadow-[0_0_12px_2px_rgba(169,149,255,0.7)]" />
         </span>
         <p className="hero-hint mt-3 text-[10px] uppercase leading-relaxed tracking-[0.2em] text-bone/45">
-          <span className="hidden md:inline">Mueve el cursor para escanear · </span>Haz scroll para transformar
+          Haz scroll para transformar
         </p>
       </div>
 
