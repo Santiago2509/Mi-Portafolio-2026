@@ -99,13 +99,45 @@ function sample(img: HTMLImageElement, cols: number): Sampled {
 const MASK_GLSL = /* glsl */ `
   uniform float uReveal;
   const vec2 FACE = vec2(${FACE_X.toFixed(3)}, ${FACE_Y.toFixed(3)});
-  // The human side opens as a circle from the centre of the face (like a drop
-  // hitting water) and grows with the scroll until it covers the whole portrait.
+  const float CELLS = 6.2; // triangles per plane unit
+  // The human side opens from the centre of the face (like a drop hitting water)
+  // and grows with the scroll until it covers the whole portrait.
   float waveR() { return uReveal * ${MAX_R.toFixed(2)}; }
-  float faceDist(vec2 p) { return distance(p, FACE); }
-  // 1 = human photo, 0 = hologram
-  float humanMask(vec2 p) {
-    return 1.0 - smoothstep(waveR() - 0.025, waveR() + 0.025, faceDist(p));
+
+  float hash21(vec2 p) {
+    p = fract(p * vec2(123.34, 456.21));
+    p += dot(p, p + 45.32);
+    return fract(p.x * p.y);
+  }
+  float segDist(vec2 p, vec2 a, vec2 b) {
+    vec2 pa = p - a;
+    vec2 ba = b - a;
+    return length(pa - ba * clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0));
+  }
+  // The portrait is covered by an irregular triangular mesh (the same facets as the
+  // constellation). Returns: x = distance of this triangle from the face (with a
+  // random offset, so the opening has a broken, angular edge), y = distance to the
+  // nearest triangle edge, z = distance to the nearest corner (both in plane units).
+  vec3 shard(vec2 pp) {
+    vec2 p = pp * CELLS;
+    p += 0.33 * vec2(sin(p.y * 1.3 + 1.7), sin(p.x * 1.1 + 4.2)); // make the grid irregular
+    const float K1 = 0.366025404;
+    const float K2 = 0.211324865;
+    vec2 i = floor(p + (p.x + p.y) * K1);
+    vec2 c0 = i - (i.x + i.y) * K2;
+    vec2 a = p - c0;
+    vec2 o = a.x > a.y ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+    vec2 c1 = c0 + o - K2;
+    vec2 c2 = c0 + 1.0 - 2.0 * K2;
+    vec2 cen = (c0 + c1 + c2) / 3.0;
+    float rnd = hash21(i * 2.0 + o);
+    float edge = min(segDist(p, c0, c1), min(segDist(p, c1, c2), segDist(p, c2, c0))) / CELLS;
+    float corner = min(distance(p, c0), min(distance(p, c1), distance(p, c2))) / CELLS;
+    return vec3(distance(cen / CELLS, FACE) + (rnd - 0.5) * 0.26, edge, corner);
+  }
+  // 1 = human photo, 0 = hologram: whole triangles flip as the wave reaches them
+  float humanMask(float cellDist) {
+    return step(cellDist, waveR());
   }
 `;
 
@@ -131,10 +163,11 @@ const pointsVert = /* glsl */ `
     vec3 cloud = p + (aRand - 0.5) * vec3(3.4, 3.0, 2.6) + vec3(0.0, -0.5, 0.0);
     p = mix(cloud, p, t);
 
-    float mask = humanMask(position.xy);
-    // travelling highlight + the hologram lines light up right at the wave front
+    vec3 sh = shard(position.xy);
+    float mask = humanMask(sh.x);
+    // travelling highlight + the hologram lines light up on the shards about to break off
     float band = 1.0 - smoothstep(0.0, 0.07, abs(position.y - (1.15 - mod(uTime * 0.42, 2.9))));
-    float front = (1.0 - smoothstep(0.0, 0.12, abs(faceDist(position.xy) - waveR()))) * step(0.002, uReveal);
+    float front = (1.0 - smoothstep(0.0, 0.14, abs(sh.x - waveR()))) * step(0.002, uReveal);
     vLum = aLum + band * 0.7 + front * 1.2;
     vA = aAlpha * (1.0 - mask) * t * (0.42 + aLum * 0.95 + band * 0.5 + front * 0.8);
 
@@ -178,11 +211,22 @@ const photoFrag = /* glsl */ `
   varying vec2 vP;
   void main() {
     vec4 tex = texture2D(uMap, vUv);
-    float mask = humanMask(vP);
-    // glow on the scan front
-    float front = (1.0 - smoothstep(0.0, 0.03, abs(faceDist(vP) - waveR()))) * step(0.002, uReveal) * step(uReveal, 0.985);
-    vec3 col = tex.rgb + front * 0.7 * vec3(0.62, 0.5, 1.0);
-    float a = tex.a * mask * smoothstep(0.6, 1.0, uAssemble);
+    vec3 sh = shard(vP);
+    float mask = humanMask(sh.x);
+    float on = step(0.002, uReveal) * step(uReveal, 0.985);
+    // the mesh shows its facets only on the broken rim: fine links and nodes on the
+    // triangles right at the front (the ones just uncovered and the ones about to go)
+    float near = (1.0 - smoothstep(0.02, 0.17, abs(sh.x - waveR()))) * on;
+    float line = (1.0 - smoothstep(0.0015, 0.006, sh.y)) * near;
+    float node = (1.0 - smoothstep(0.008, 0.015, sh.z)) * near;
+    // a triangle glints as it breaks off, then settles into the photo
+    float glint = (1.0 - smoothstep(0.0, 0.2, waveR() - sh.x)) * mask * on;
+    vec3 violet = vec3(0.55, 0.47, 1.0);
+    float mesh = max(line * 0.75, node);
+    vec3 col = tex.rgb * (1.0 + glint * 0.3) + violet * glint * 0.2;
+    col = mix(col, mix(violet, vec3(1.0), node * 0.7), mesh * mask);
+    float a = tex.a * max(mask, mesh) * smoothstep(0.6, 1.0, uAssemble);
+    col = mix(mix(violet, vec3(1.0), node * 0.7), col, mask); // hologram side: only the mesh is drawn
     gl_FragColor = vec4(col, a);
     #include <colorspace_fragment>
   }
