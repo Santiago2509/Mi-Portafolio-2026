@@ -93,7 +93,9 @@ function sample(img: HTMLImageElement, cols: number): Sampled {
 
 const MASK_GLSL = /* glsl */ `
   uniform float uReveal;
-  float scanLine() { return mix(1.25, -1.25, uReveal); }
+  // The scan line finishes its sweep at 72% of the scroll; the rest lets the
+  // released particles finish dispersing.
+  float scanLine() { return mix(1.25, -1.25, clamp(uReveal / 0.72, 0.0, 1.0)); }
   // 1 = human photo, 0 = hologram. A scan line sweeps down as the visitor scrolls.
   float humanMask(vec2 p) {
     return smoothstep(scanLine() - 0.02, scanLine() + 0.02, p.y);
@@ -122,16 +124,38 @@ const pointsVert = /* glsl */ `
     vec3 cloud = p + (aRand - 0.5) * vec3(3.4, 3.0, 2.6) + vec3(0.0, -0.5, 0.0);
     p = mix(cloud, p, t);
 
-    float mask = humanMask(position.xy);
     // travelling highlight + glow at the scan front
+    float sl = scanLine();
     float band = 1.0 - smoothstep(0.0, 0.07, abs(position.y - (1.15 - mod(uTime * 0.42, 2.9))));
-    float front = (1.0 - smoothstep(0.0, 0.14, abs(position.y - scanLine()))) * step(0.002, uReveal);
-    vLum = aLum + band * 0.7 + front * 1.4;
-    vA = aAlpha * (1.0 - mask) * t * (0.42 + aLum * 0.95 + band * 0.5 + front);
+    float front = (1.0 - smoothstep(0.0, 0.14, abs(position.y - sl))) * step(0.002, uReveal);
+
+    // Nanotech: once the scan line has passed a particle it peels off the body and
+    // streams away. Neighbours share a smooth flow direction, so the hologram's
+    // lines leave as ribbons before thinning out toward the rest of the page.
+    float released = step(sl, position.y) * step(0.002, uReveal);
+    float tail = clamp((uReveal - 0.72) / 0.28, 0.0, 1.0);
+    float rel = (max(0.0, position.y - sl) + tail * 1.4) * released;
+    // the far ends of each line let go first, so the line unravels from its tips
+    float q = clamp(rel * (0.75 + abs(position.x - 0.02) * 1.1) - aRand.z * 0.04, 0.0, 1.0);
+    float e = q * q * (3.0 - 2.0 * q);
+    float side = position.x > 0.02 ? 1.0 : -1.0;
+    float row = position.y * 9.0; // same for every particle of a line → the line moves as one ribbon
+    vec3 off = vec3(0.0);
+    // stretch sideways: outer particles travel further, turning the line into a trail
+    off.x = side * e * (0.55 + abs(position.x - 0.02) * 3.4 + aRand.y * 0.35);
+    // each ribbon waves and drifts on its own lane
+    off.y = e * (sin(row + uTime * 0.35) * 0.22 + sin(position.x * 5.0 + row * 0.7 + uTime * 0.9) * 0.09 * e)
+          + e * e * (aRand.x - 0.5) * 0.25;
+    off.z = e * 0.35 * sin(row * 1.7);
+    p += off * t;
+
+    float fresh = (1.0 - q) * released; // just detached: glints
+    vLum = aLum + band * 0.7 + front * 1.4 + fresh * 0.35;
+    vA = aAlpha * t * (0.42 + aLum * 0.95 + band * 0.5 + front + fresh * 0.3) * (1.0 - smoothstep(0.55, 1.0, q));
 
     vec4 mv = modelViewMatrix * vec4(p, 1.0);
     gl_Position = projectionMatrix * mv;
-    gl_PointSize = uSize * (0.55 + aLum * 1.1 + band * 0.7 + front) / -mv.z;
+    gl_PointSize = uSize * (0.55 + aLum * 1.1 + band * 0.7 + front + fresh * 0.2) / -mv.z;
   }
 `;
 
@@ -171,7 +195,7 @@ const photoFrag = /* glsl */ `
     vec4 tex = texture2D(uMap, vUv);
     float mask = humanMask(vP);
     // glow on the scan front
-    float front = (1.0 - smoothstep(0.0, 0.03, abs(vP.y - scanLine()))) * step(0.002, uReveal) * step(uReveal, 0.999);
+    float front = (1.0 - smoothstep(0.0, 0.03, abs(vP.y - scanLine()))) * step(0.002, uReveal) * step(uReveal, 0.715);
     vec3 col = tex.rgb + front * 0.9 * vec3(0.62, 0.5, 1.0);
     float a = tex.a * mask * smoothstep(0.6, 1.0, uAssemble);
     gl_FragColor = vec4(col, a);

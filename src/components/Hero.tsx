@@ -40,7 +40,7 @@ export default function Hero({ ready }: { ready: boolean }) {
               holo.reveal = r; // the page-wide network bursts out at 1
               if (pct.current) pct.current.textContent = String(Math.round(r * 100)).padStart(3, "0");
               if (bar.current) bar.current.style.transform = `scaleX(${r})`;
-              if (mode.current) mode.current.textContent = r >= 1 ? "Humano" : r > 0.01 ? "Transformando" : "Máquina";
+              if (mode.current) mode.current.textContent = r >= 1 ? "Humano" : r > 0.01 ? "Mutando" : "Máquina";
             },
           },
         })

@@ -26,8 +26,8 @@ const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
 
 /**
- * Page-wide constellation. It stays dark while the hero is a hologram; the moment
- * the portrait becomes fully human the nodes burst out from it, slowly, linking
+ * Page-wide constellation. It stays dark while the hero is a hologram; as the
+ * portrait finishes turning human (its particles streaming away) the nodes burst out from it, slowly, linking
  * into a circuit as the wave passes. Afterwards the field lives across the whole
  * site and connects around the cursor.
  */
@@ -102,7 +102,7 @@ export default function Network() {
       const t = now / 1000;
 
       // phase changes follow the hero transformation
-      if (phase === "off" && holo.reveal >= 0.999) {
+      if (phase === "off" && holo.reveal >= 0.5) {
         phase = "on";
         t0 = t;
         origin();
@@ -111,7 +111,7 @@ export default function Network() {
           n.heat = 0;
         }
       }
-      const wantOn = phase === "on" && holo.reveal > 0.9;
+      const wantOn = phase === "on" && holo.reveal > 0.4;
       fade += ((wantOn ? 1 : 0) - fade) * Math.min(1, dt * (wantOn ? 6 : 3.5));
       if (phase === "on" && !wantOn && fade < 0.02) phase = "off";
 
@@ -204,9 +204,10 @@ export default function Network() {
           ctx.strokeStyle = `rgba(128,122,255,${Math.min(0.85, s)})`;
           ctx.stroke();
           // filled facets, like folded paper, where three lit nodes meet
-          if (s > 0.25 && list.length < 70) {
+          if (s > 0.25 && a.k >= 1 && b.k >= 1 && list.length < 70) {
             for (let k = j + 1; k < list.length; k++) {
               const c = list[k];
+              if (c.k < 1) continue;
               if (Math.hypot(a.x - c.x, a.y - c.y) > LINK * 0.8 || Math.hypot(b.x - c.x, b.y - c.y) > LINK * 0.8) continue;
               ctx.beginPath();
               ctx.moveTo(a.x, a.y);
