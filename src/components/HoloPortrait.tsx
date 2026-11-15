@@ -22,6 +22,7 @@ type Sampled = {
   rand: Float32Array;
   photo: THREE.Texture;
   depthMap: THREE.Texture;
+  rowStep: number; // plane-space distance between consecutive lines
 };
 
 /** Reads the portrait into point attributes + a soft depth map (brightness + head bump). */
@@ -93,6 +94,7 @@ function sample(img: HTMLImageElement, cols: number): Sampled {
     rand: new Float32Array(R),
     photo,
     depthMap,
+    rowStep: (2 / rows) * PLANE_H,
   };
 }
 
@@ -115,12 +117,20 @@ const pointsVert = /* glsl */ `
   uniform float uAssemble;
   uniform float uDepth;
   uniform float uSize;
+  uniform float uGlitch; // 0 = stable, 1 = full signal failure (short bursts)
+  uniform float uRowStep; // vertical distance between two hologram lines
   attribute float aLum;
   attribute float aDepth;
   attribute float aAlpha;
   attribute vec3 aRand;
   varying float vA;
   varying float vLum;
+  varying float vTint;
+  float hash21(vec2 p) {
+    p = fract(p * vec2(123.34, 456.21));
+    p += dot(p, p + 45.32);
+    return fract(p.x * p.y);
+  }
   void main() {
     vec3 p = position;
     p.z = aDepth * uDepth;
@@ -131,12 +141,29 @@ const pointsVert = /* glsl */ `
     vec3 cloud = p + (aRand - 0.5) * vec3(3.4, 3.0, 2.6) + vec3(0.0, -0.5, 0.0);
     p = mix(cloud, p, t);
 
+    // Glitch: the projection fails for an instant. Horizontal slices of the figure
+    // jump sideways, a few tear vertically, some drop out, and the image splits
+    // into two offset colour ghosts. The pattern changes ~18 times per second.
+    float gt = floor(uTime * 18.0);
+    float slice = floor(position.y * (4.0 + hash21(vec2(gt, 3.3)) * 9.0) + hash21(vec2(gt, 9.1)) * 5.0);
+    float sr = hash21(vec2(slice, gt));
+    float torn = step(0.58, sr);
+    p.x += (hash21(vec2(slice + 3.1, gt)) - 0.5) * 0.42 * uGlitch * torn;
+    p.y += (sr - 0.9) * 0.5 * uGlitch * step(0.9, sr);
+    p.x += (hash21(vec2(gt, 1.7)) - 0.5) * 0.04 * uGlitch; // whole figure shakes
+    // colour ghosts: whole lines alternate, so every line stays in one piece
+    float ghost = mod(floor((position.y + 1.0) / uRowStep + 0.5), 2.0) < 1.0 ? -1.0 : 1.0;
+    p.x += ghost * 0.03 * uGlitch;
+    vTint = ghost * uGlitch;
+    float dropout = 1.0 - uGlitch * 0.7 * step(0.84, hash21(vec2(slice, gt + 9.0)));
+    float flicker = 1.0 - uGlitch * 0.2 * hash21(vec2(gt, 5.5));
+
     float mask = humanMask(position.xy);
     // travelling highlight + the hologram lines light up right at the wave front
     float band = 1.0 - smoothstep(0.0, 0.07, abs(position.y - (1.15 - mod(uTime * 0.42, 2.9))));
     float front = (1.0 - smoothstep(0.0, 0.12, abs(faceDist(position.xy) - waveR()))) * step(0.002, uReveal);
     vLum = aLum + band * 0.7 + front * 1.2;
-    vA = aAlpha * (1.0 - mask) * t * (0.42 + aLum * 0.95 + band * 0.5 + front * 0.8);
+    vA = aAlpha * (1.0 - mask) * t * (0.42 + aLum * 0.95 + band * 0.5 + front * 0.8) * dropout * flicker;
 
     vec4 mv = modelViewMatrix * vec4(p, 1.0);
     gl_Position = projectionMatrix * mv;
@@ -147,11 +174,15 @@ const pointsVert = /* glsl */ `
 const pointsFrag = /* glsl */ `
   varying float vA;
   varying float vLum;
+  varying float vTint;
   void main() {
     float d = length(gl_PointCoord - 0.5);
     float a = (1.0 - smoothstep(0.08, 0.5, d)) * vA;
     vec3 violet = vec3(0.45, 0.31, 1.0);
     vec3 col = mix(violet, vec3(1.0), smoothstep(0.18, 0.85, vLum));
+    // colour ghosts while glitching: one copy shifts to magenta, the other to cyan
+    col = mix(col, vec3(1.0, 0.22, 0.85), clamp(vTint, 0.0, 1.0) * 0.6);
+    col = mix(col, vec3(0.2, 0.95, 1.0), clamp(-vTint, 0.0, 1.0) * 0.6);
     gl_FragColor = vec4(col, a);
   }
 `;
@@ -202,10 +233,14 @@ function Scene({
   const group = useRef<THREE.Group>(null);
   const { camera, size, gl } = useThree();
   const assemble = useRef(0);
+  const glitch = useRef({ next: 3.2, until: 0, power: 0 });
+  const reduced = useMemo(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches, []);
 
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
+      uGlitch: { value: 0 },
+      uRowStep: { value: data.rowStep },
       uAssemble: { value: 0 },
       uReveal: { value: 0 },
       uDepth: { value: 0.42 },
@@ -281,6 +316,17 @@ function Scene({
   useFrame((state, dt) => {
     const t = state.clock.elapsedTime;
     uniforms.uTime.value = t;
+
+    // Glitch scheduler: short bursts at irregular intervals, sometimes a double hit.
+    // Only while it is a hologram that has finished assembling.
+    const g = glitch.current;
+    if (t > g.next) {
+      g.until = t + 0.12 + Math.random() * 0.38;
+      g.power = 0.45 + Math.random() * 0.55;
+      g.next = g.until + (Math.random() < 0.3 ? 0.12 + Math.random() * 0.2 : 1.8 + Math.random() * 3.6);
+    }
+    const live = !reduced && assemble.current >= 1 && uniforms.uReveal.value < 0.97;
+    uniforms.uGlitch.value = live && t < g.until ? g.power * (0.6 + 0.4 * Math.random()) : 0;
     if (ready) assemble.current = Math.min(1, assemble.current + dt / 2.4);
     uniforms.uAssemble.value = assemble.current;
     uniforms.uReveal.value = THREE.MathUtils.damp(uniforms.uReveal.value, revealRef.current, 8, dt);
