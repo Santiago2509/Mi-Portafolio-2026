@@ -119,6 +119,7 @@ const pointsVert = /* glsl */ `
   uniform float uSize;
   uniform float uGlitch; // 0 = stable, 1 = full signal failure (short bursts)
   uniform float uRowStep; // vertical distance between two hologram lines
+  uniform float uShift; // whole projection knocked off-centre (plane units, signed)
   attribute float aLum;
   attribute float aDepth;
   attribute float aAlpha;
@@ -151,6 +152,8 @@ const pointsVert = /* glsl */ `
     p.x += (hash21(vec2(slice + 3.1, gt)) - 0.5) * 0.42 * uGlitch * torn;
     p.y += (sr - 0.9) * 0.5 * uGlitch * step(0.9, sr);
     p.x += (hash21(vec2(gt, 1.7)) - 0.5) * 0.04 * uGlitch; // whole figure shakes
+    // off-centre failure: the figure jumps sideways; a few slices lag behind at the centre
+    p.x += uShift * (1.0 - 0.75 * step(0.86, hash21(vec2(slice + 7.7, gt))));
     // colour ghosts: whole lines alternate, so every line stays in one piece
     float ghost = mod(floor((position.y + 1.0) / uRowStep + 0.5), 2.0) < 1.0 ? -1.0 : 1.0;
     p.x += ghost * 0.03 * uGlitch;
@@ -233,13 +236,14 @@ function Scene({
   const group = useRef<THREE.Group>(null);
   const { camera, size, gl } = useThree();
   const assemble = useRef(0);
-  const glitch = useRef({ next: 3.2, until: 0, power: 0 });
+  const glitch = useRef({ next: 3.2, until: 0, power: 0, shift: 0 });
   const reduced = useMemo(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches, []);
 
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
       uGlitch: { value: 0 },
+      uShift: { value: 0 },
       uRowStep: { value: data.rowStep },
       uAssemble: { value: 0 },
       uReveal: { value: 0 },
@@ -323,10 +327,19 @@ function Scene({
     if (t > g.next) {
       g.until = t + 0.12 + Math.random() * 0.38;
       g.power = 0.45 + Math.random() * 0.55;
+      // every so often the failure also throws the projection off-centre, left or right
+      if (Math.random() < 0.38) {
+        g.shift = (Math.random() < 0.5 ? -1 : 1) * (0.22 + Math.random() * 0.4) * (mobile ? 0.55 : 1);
+        g.until += 0.15 + Math.random() * 0.25; // hold it a little longer so it reads
+      } else g.shift = 0;
       g.next = g.until + (Math.random() < 0.3 ? 0.12 + Math.random() * 0.2 : 1.8 + Math.random() * 3.6);
     }
     const live = !reduced && assemble.current >= 1 && uniforms.uReveal.value < 0.97;
-    uniforms.uGlitch.value = live && t < g.until ? g.power * (0.6 + 0.4 * Math.random()) : 0;
+    const bursting = live && t < g.until;
+    uniforms.uGlitch.value = bursting ? g.power * (0.6 + 0.4 * Math.random()) : 0;
+    // the jump is stepped, not smooth: it stutters between positions and snaps back
+    const stutter = [1, 1, 0.55, 1, 0.8, 1.15][Math.floor(t * 14) % 6];
+    uniforms.uShift.value = bursting ? g.shift * stutter : 0;
     if (ready) assemble.current = Math.min(1, assemble.current + dt / 2.4);
     uniforms.uAssemble.value = assemble.current;
     uniforms.uReveal.value = THREE.MathUtils.damp(uniforms.uReveal.value, revealRef.current, 8, dt);
