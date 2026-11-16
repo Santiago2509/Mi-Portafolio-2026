@@ -87,7 +87,7 @@ export default function Skills() {
                 de <span className="font-serif normal-case italic text-glow">herramientas</span>
               </span>
             </h2>
-            <p className="mt-6 max-w-sm text-sm text-bone/60">
+            <p className="mt-6 max-w-sm text-sm text-bone/78">
               Toca una tecla (o escribe en tu teclado) para ver qué hago con cada una. Si no tocas nada, se
               presentan solas.
             </p>
@@ -103,7 +103,7 @@ export default function Skills() {
                   <span className="mt-2 block font-serif text-3xl italic text-bone md:text-4xl">“{s.line}”</span>
                 </p>
               ) : (
-                <p className="text-xs uppercase tracking-[0.3em] text-bone/40">↳ Presiona una tecla</p>
+                <p className="text-xs uppercase tracking-[0.3em] text-bone/65">↳ Presiona una tecla</p>
               )}
             </div>
             <button
@@ -149,7 +149,7 @@ export default function Skills() {
             <h3 className="font-display text-5xl uppercase leading-none md:text-7xl">
               Lo que <span className="font-serif normal-case italic text-glow">hago</span>
             </h3>
-            <p className="text-xs uppercase tracking-[0.3em] text-bone/40">Arrastra y lanza ↓</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-bone/65">Arrastra y lanza ↓</p>
           </div>
           <div className="mt-6 rounded-2xl border border-bone/10 bg-coal/60">
             <PhysicsPills items={services} />

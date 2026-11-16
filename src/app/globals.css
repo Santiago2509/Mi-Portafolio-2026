@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-ink: #07060b;
-  --color-coal: #0d0b14;
-  --color-ash: #17141f;
+  --color-ink: #000000;
+  --color-coal: #000000;
+  --color-ash: #141218;
   --color-bone: #f1eff7;
-  --color-mute: #8b879a;
+  --color-mute: #c2bed1;
   --color-accent: #6d4dff;
   --color-glow: #a995ff;
   --color-deep: #1a0b52;

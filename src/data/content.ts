@@ -146,7 +146,7 @@ export const timeline: {
     now: true,
     text: "Pregrado en curso. Formación en programación, algoritmos y estructuras de datos, bases de datos, arquitectura de software y gestión de proyectos.",
     tags: ["Pregrado", "En curso"],
-    progress: { done: 6, total: 9, unit: "semestre" },
+    progress: { done: 6, total: 8, unit: "semestre" },
   },
   {
     period: "2025 — Actualidad",

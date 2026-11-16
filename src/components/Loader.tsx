@@ -71,10 +71,10 @@ export default function Loader({ onReveal, onDone }: { onReveal: () => void; onD
             style={{ transform: `scaleX(${count / 100})` }}
           />
         </span>
-        <div className="loader-item mt-4 h-[72px] font-mono text-[11px] leading-[18px] text-bone/60">
+        <div className="loader-item mt-4 h-[72px] font-mono text-[11px] leading-[18px] text-bone/78">
           {BOOT.slice(0, line + 1).map((t, i) => (
             <p key={t} className={i === line ? "text-glow" : ""}>
-              <span className="text-bone/30">&gt;</span> {t}
+              <span className="text-bone/55">&gt;</span> {t}
               {i === line ? <span className="animate-pulse">_</span> : " ✓"}
             </p>
           ))}

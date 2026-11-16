@@ -70,7 +70,7 @@ export default function Journey() {
           <h2 className="font-display text-6xl uppercase leading-[0.9] md:text-8xl">
             Mi <span className="font-serif normal-case italic text-glow">recorrido</span>
           </h2>
-          <p className="mt-6 max-w-sm text-sm leading-relaxed text-bone/60">
+          <p className="mt-6 max-w-sm text-sm leading-relaxed text-bone/78">
             Lo que he estudiado y lo que he construido hasta hoy.
           </p>
           <div className="stats mt-12 grid grid-cols-3 gap-4 border-t border-bone/10 pt-8">
@@ -110,11 +110,11 @@ export default function Journey() {
                 </div>
                 <h3 className="mt-3 font-display text-3xl uppercase leading-none text-bone md:text-4xl">{t.title}</h3>
                 <p className="mt-1 font-serif text-xl italic text-glow">{t.place}</p>
-                <p className="mt-4 max-w-xl text-sm leading-relaxed text-bone/60">{t.text}</p>
+                <p className="mt-4 max-w-xl text-sm leading-relaxed text-bone/78">{t.text}</p>
                 {t.progress && (
                   <div className="mt-5 max-w-md">
                     <div className="flex items-baseline justify-between text-[11px] uppercase tracking-[0.2em]">
-                      <span className="text-bone/70">
+                      <span className="text-bone/82">
                         {t.progress.done}.º {t.progress.unit}
                       </span>
                       <span className="text-mute">
@@ -137,7 +137,7 @@ export default function Journey() {
                   {t.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full border border-bone/15 px-3 py-1 text-[10px] uppercase tracking-widest text-bone/70"
+                      className="rounded-full border border-bone/15 px-3 py-1 text-[10px] uppercase tracking-widest text-bone/82"
                     >
                       {tag}
                     </span>

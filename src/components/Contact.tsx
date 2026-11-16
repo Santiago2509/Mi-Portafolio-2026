@@ -89,7 +89,7 @@ export default function Contact() {
               </span>
             </span>
           </h2>
-          <p className="mt-6 max-w-md text-bone/60">
+          <p className="mt-6 max-w-md text-bone/78">
             Estoy abierto a nuevos proyectos y colaboraciones. Si tienes una idea, hablemos y la hacemos realidad.
           </p>
 
@@ -154,7 +154,7 @@ export default function Contact() {
 
       {/* Footer */}
       <footer className="relative mx-auto mt-10 max-w-[1600px]">
-        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-bone/10 py-6 text-[11px] uppercase tracking-[0.25em] text-bone/50">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-bone/10 py-6 text-[11px] uppercase tracking-[0.25em] text-bone/72">
           <span>© 2026 {profile.name}</span>
           <span>Hecho con código y actitud</span>
           <button onClick={() => scrollToId("inicio")} className="transition-colors hover:text-glow">

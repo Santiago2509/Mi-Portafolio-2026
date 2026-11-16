@@ -56,7 +56,7 @@ export default function Navbar() {
 
           <div className="flex items-center gap-4">
             {profile.available && (
-              <span className="hidden items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-bone/70 sm:flex">
+              <span className="hidden items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-bone/82 sm:flex">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-glow opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />

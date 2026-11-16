@@ -84,7 +84,7 @@ export default function Hero({ ready }: { ready: boolean }) {
       <div className="hero-aura pointer-events-none absolute left-1/2 top-[52%] h-[95vmin] w-[95vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/30 blur-[130px]" />
       <div className="pointer-events-none absolute left-1/2 top-[46%] h-[78vmin] w-[78vmin] -translate-x-1/2 -translate-y-1/2 rounded-full border border-glow/25" />
       <div className="pointer-events-none absolute left-1/2 top-[46%] h-[96vmin] w-[96vmin] -translate-x-1/2 -translate-y-1/2 animate-[spin_90s_linear_infinite] rounded-full border border-dashed border-glow/20" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,#07060b_88%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,#000000_88%)]" />
 
       {/* Giant word behind the portrait */}
       <div ref={word} className="absolute inset-x-0 top-[14%] md:top-[11%]">
@@ -117,10 +117,10 @@ export default function Hero({ ready }: { ready: boolean }) {
         <p className="hero-fade mt-3 bg-gradient-to-r from-glow via-[#c9bcff] to-bone bg-clip-text font-display text-[2rem] uppercase leading-[0.92] text-transparent drop-shadow-[0_0_24px_rgba(169,149,255,0.35)] md:text-[3.4rem]">
           {profile.role}
         </p>
-        <p className="hero-fade mt-1 text-[10px] uppercase tracking-[0.2em] text-bone/50 md:text-[11px] md:tracking-[0.3em]">
+        <p className="hero-fade mt-1 text-[10px] uppercase tracking-[0.2em] text-bone/72 md:text-[11px] md:tracking-[0.3em]">
           {profile.specialties.join(" · ")}
         </p>
-        <p className="hero-fade mt-3 hidden text-sm leading-relaxed text-bone/60 md:block">{profile.tagline}</p>
+        <p className="hero-fade mt-3 hidden text-sm leading-relaxed text-bone/78 md:block">{profile.tagline}</p>
         <button
           onClick={() => scrollToId("proyectos")}
           data-cursor="Ver"
@@ -142,7 +142,7 @@ export default function Hero({ ready }: { ready: boolean }) {
         <span className="mt-2 block h-px w-full bg-bone/15">
           <span ref={bar} className="block h-px w-full origin-left scale-x-0 bg-glow shadow-[0_0_10px_1px_rgba(169,149,255,0.7)]" />
         </span>
-        <p className="hero-hint mt-2 text-[9px] uppercase tracking-[0.25em] text-bone/40 md:text-[10px]">Scroll ↓</p>
+        <p className="hero-hint mt-2 text-[9px] uppercase tracking-[0.25em] text-bone/65 md:text-[10px]">Scroll ↓</p>
       </div>
     </section>
   );

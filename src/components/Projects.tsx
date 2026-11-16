@@ -10,7 +10,7 @@ function Visual({ p, i }: { p: Project; i: number }) {
   }
   // Placeholder art until real screenshots exist
   return (
-    <div className="absolute inset-0 overflow-hidden" style={{ background: `radial-gradient(circle at 70% 30%, ${p.accent}, #07060b 70%)` }}>
+    <div className="absolute inset-0 overflow-hidden" style={{ background: `radial-gradient(circle at 70% 30%, ${p.accent}, #000000 70%)` }}>
       <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(#f1eff722_1px,transparent_1px),linear-gradient(90deg,#f1eff722_1px,transparent_1px)] [background-size:40px_40px]" />
       <span className="absolute -bottom-6 -left-2 font-display text-[9rem] uppercase leading-none text-bone/90 md:text-[12rem]">
         {p.title}
@@ -73,10 +73,10 @@ export default function Projects() {
             <br />
             <span className="font-serif normal-case italic text-glow">habla</span> solo
           </h2>
-          <p className="mt-6 max-w-sm text-sm leading-relaxed text-bone/60">
+          <p className="mt-6 max-w-sm text-sm leading-relaxed text-bone/78">
             Una selección de lo que he construido. Desliza para ver cada uno.
           </p>
-          <span className="mt-10 hidden items-center gap-3 text-xs uppercase tracking-[0.3em] text-bone/50 md:flex">
+          <span className="mt-10 hidden items-center gap-3 text-xs uppercase tracking-[0.3em] text-bone/72 md:flex">
             Scroll <span className="inline-block h-px w-16 bg-bone/30" /> →
           </span>
         </div>
@@ -104,17 +104,17 @@ export default function Projects() {
                   <p className="text-xs uppercase tracking-[0.2em] text-mute">
                     {p.category} · {p.year}
                   </p>
-                  <p className="mt-3 max-w-md text-sm text-bone/60">{p.description}</p>
+                  <p className="mt-3 max-w-md text-sm text-bone/78">{p.description}</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {p.tags.map((t) => (
-                      <span key={t} className="rounded-full border border-bone/15 px-3 py-1 text-[10px] uppercase tracking-widest text-bone/70">
+                      <span key={t} className="rounded-full border border-bone/15 px-3 py-1 text-[10px] uppercase tracking-widest text-bone/82">
                         {t}
                       </span>
                     ))}
                   </div>
                 </div>
               </div>
-              <span className="text-2xl text-bone/60 transition-all duration-300 group-hover:-rotate-45 group-hover:text-glow">→</span>
+              <span className="text-2xl text-bone/78 transition-all duration-300 group-hover:-rotate-45 group-hover:text-glow">→</span>
             </div>
           </a>
         ))}
