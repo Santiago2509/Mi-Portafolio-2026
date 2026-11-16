@@ -133,6 +133,24 @@ export const projects: Project[] = [
     accent: "#a855f7",
   },
   {
+    title: "Atelier · Joyas 3D",
+    category: "Catálogo con visor 3D",
+    year: "2026",
+    description:
+      "Catálogo de alta joyería donde cada pieza se ve en 3D: se gira 360°, se acerca hasta el detalle y cambia de metal en tiempo real, con gemas que refractan la luz.",
+    features: [
+      "Visor 3D interactivo 360°",
+      "Oro amarillo, blanco o rosa al instante",
+      "Gemas con refracción realista",
+      "Funciona en móvil y escritorio",
+    ],
+    tags: ["React", "TypeScript", "Three.js", "R3F"],
+    href: "https://modelo-joyas.vercel.app",
+    repo: "https://github.com/Santiago2509/Modelo-joyas-",
+    image: "/images/projects/joyas-3d.webp",
+    accent: "#d4a853",
+  },
+  {
     title: "AirPods Nariño",
     category: "E-commerce · Pasto",
     year: "2026",
@@ -219,13 +237,6 @@ export const moreProjects: (Pick<Project, "title" | "category" | "description" |
     tags: ["Java 21", "Spring Boot", "React", "Recharts"],
     href: "https://tallerproxy.vercel.app",
     repo: "https://github.com/Santiago2509/Taller-proxy",
-  },
-  {
-    title: "Catálogo de Joyas 3D",
-    category: "Visor 3D interactivo",
-    description: "Catálogo de joyería donde cada pieza se gira 360°, se acerca al detalle y cambia de metal en tiempo real.",
-    tags: ["React", "TypeScript", "Three.js"],
-    repo: "https://github.com/Santiago2509/Modelo-joyas-",
   },
   {
     title: "Clickeable",
