@@ -17,8 +17,11 @@ export const profile = {
   available: true,
   email: "hola@tudominio.com", // TODO
   phone: "", // TODO
+  github: [
+    { label: "@Santiago2509", href: "https://github.com/Santiago2509" },
+    { label: "@Santiago25-lab", href: "https://github.com/Santiago25-lab" },
+  ],
   socials: [
-    { label: "GitHub", href: "https://github.com/santiago2509" },
     { label: "LinkedIn", href: "#" }, // TODO
     { label: "Instagram", href: "#" }, // TODO
   ],
@@ -60,6 +63,24 @@ export type Project = {
 // Proyectos principales (con sitio en vivo)
 export const projects: Project[] = [
   {
+    title: "Jornal 360",
+    category: "Sistema de nómina y personal",
+    year: "2026",
+    description:
+      "Sistema completo de administración de personal y liquidación de nómina para empresas: empleados, asistencia, novedades, prestaciones y retiros en un solo lugar.",
+    features: [
+      "Liquidación de nómina",
+      "Asistencia y novedades",
+      "Prestaciones y retiros",
+      "Reportes y auditoría",
+    ],
+    tags: ["Next.js", "React", "TypeScript", "Tailwind", "Recharts"],
+    href: "https://jornal360-frontend.vercel.app",
+    repo: "https://github.com/Santiago25-lab/jornal360-frontend",
+    image: "/images/projects/jornal360.webp",
+    accent: "#8b5cf6",
+  },
+  {
     title: "Floristería Violeta",
     category: "E-commerce · Cali",
     year: "2026",
@@ -75,6 +96,41 @@ export const projects: Project[] = [
     href: "https://web-floristeria-violeta.vercel.app",
     image: "/images/projects/floristeria-violeta.webp",
     accent: "#8b5cf6",
+  },
+  {
+    title: "Libre de Ansiedad",
+    category: "Plataforma de membresías",
+    year: "2026",
+    description:
+      "Plataforma para la clínica Libre de Ansiedad que vende membresías y cobra automáticamente a cada cliente mes a mes, con un aula virtual para los suscriptores.",
+    features: [
+      "Cobros recurrentes automáticos",
+      "Pagos con ePayco",
+      "Aula virtual para suscriptores",
+      "Panel de suscriptores y contenido",
+    ],
+    tags: ["Next.js", "TypeScript", "Supabase", "ePayco"],
+    href: "https://membresia-lda.vercel.app",
+    image: "/images/projects/libre-de-ansiedad.webp",
+    accent: "#0ea5e9",
+  },
+  {
+    title: "CreatorCV",
+    category: "Creador de hojas de vida con IA",
+    year: "2026",
+    description:
+      "Crea hojas de vida a la medida de forma rápida y fácil: muchas plantillas, edición en tiempo real y un asistente de inteligencia artificial que ayuda a redactar.",
+    features: [
+      "Asistente de IA para redactar",
+      "Múltiples plantillas",
+      "Vista previa en tiempo real",
+      "Exportación a PDF",
+    ],
+    tags: ["React", "Supabase", "Spring Boot", "IA"],
+    href: "https://creator-frontend-mu.vercel.app",
+    repo: "https://github.com/Santiago25-lab/creator-frontend",
+    image: "/images/projects/creatorcv.webp",
+    accent: "#a855f7",
   },
   {
     title: "AirPods Nariño",
@@ -94,21 +150,21 @@ export const projects: Project[] = [
     accent: "#3b82f6",
   },
   {
-    title: "Libre de Ansiedad",
-    category: "Plataforma de membresías",
+    title: "MUSIC2D",
+    category: "Reproductor de música",
     year: "2026",
     description:
-      "Plataforma para la clínica Libre de Ansiedad que vende membresías y cobra automáticamente a cada cliente mes a mes, con un aula virtual para los suscriptores.",
+      "Reproductor de música con estilo retro: tocadiscos animado, subida de MP3 propios, búsqueda de canciones en la nube y una vista 3D de portadas.",
     features: [
-      "Cobros recurrentes automáticos",
-      "Pagos con ePayco",
-      "Aula virtual para suscriptores",
-      "Panel de suscriptores y contenido",
+      "Sube y reproduce tus MP3",
+      "Búsqueda de canciones en la nube",
+      "Vista 3D CoverFlow y modo grafo",
+      "Listas con estructuras de datos propias",
     ],
-    tags: ["Next.js", "TypeScript", "Supabase", "ePayco"],
-    href: "https://membresia-lda.vercel.app",
-    image: "/images/projects/libre-de-ansiedad.webp",
-    accent: "#0ea5e9",
+    tags: ["TypeScript", "Vite", "IndexedDB"],
+    href: "https://reproductor-musica-eight.vercel.app",
+    image: "/images/projects/music2d.webp",
+    accent: "#64748b",
   },
 ];
 
@@ -117,11 +173,44 @@ export const moreProjects: (Pick<Project, "title" | "category" | "description" |
   team?: boolean;
 })[] = [
   {
-    title: "CreatorCV",
-    category: "App web con IA",
-    description: "Editor de hojas de vida con plantillas, vista previa en tiempo real, exportación a PDF y un asistente de IA para redactar.",
-    tags: ["React", "Supabase", "Spring Boot", "IA"],
-    repo: "https://github.com/Santiago25-lab/creator-frontend",
+    title: "Verifica Santa Fe",
+    category: "Bot anti-phishing",
+    description: "Bot de WhatsApp y Telegram que revisa mensajes, enlaces y capturas sospechosas y responde con un semáforo de riesgo para comerciantes.",
+    tags: ["Next.js", "Supabase", "OCR", "Bots"],
+    href: "https://lab-bot-verifica-santa-fe.vercel.app",
+    repo: "https://github.com/Santiago25-lab/lab-bot-verifica-santa-fe",
+  },
+  {
+    title: "StaffFlow RH",
+    category: "Recursos humanos",
+    description: "Plataforma de RR. HH. para empresas colombianas: empleados, vacaciones, novedades, asistencia con QR y costos laborales.",
+    tags: ["React", "Vite", "Node.js", "Tailwind"],
+    href: "https://getvac-la-lujosa.vercel.app",
+    repo: "https://github.com/Santiago25-lab/getvac-la-lujosa",
+  },
+  {
+    title: "iNARIÑO",
+    category: "E-commerce premium",
+    description: "Tienda y asesoría tecnológica estilo Apple, con modo claro y oscuro y animaciones cinematográficas.",
+    tags: ["Next.js", "Supabase", "GSAP"],
+    href: "https://proyecto-giancarlo.vercel.app",
+    repo: "https://github.com/Santiago25-lab/Proyecto-Giancarlo",
+  },
+  {
+    title: "Eatyfy",
+    category: "Buscador de restaurantes",
+    description: "App para descubrir restaurantes en Colombia según tu presupuesto, con mapas interactivos y promociones.",
+    tags: ["React", "TypeScript", "Leaflet"],
+    href: "https://fronted-eatyfy1.vercel.app",
+    repo: "https://github.com/Santiago25-lab/fronted-eatyfy1",
+  },
+  {
+    title: "Reservas Hotel",
+    category: "Sistema de reservas",
+    description: "Aplicación de reservas de hotel con frontend en React y backend en Java.",
+    tags: ["React", "TypeScript", "Java"],
+    href: "https://reservas-hotel-frontend.vercel.app",
+    repo: "https://github.com/Santiago25-lab/ReservasHotelFrontend",
   },
   {
     title: "Observability Hub",

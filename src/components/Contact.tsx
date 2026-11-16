@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { gsap } from "@/lib/gsap";
 import { profile } from "@/data/content";
+import { siGithub } from "simple-icons";
 import { scrollToId } from "./SmoothScroll";
 
 function Magnetic({ children }: { children: React.ReactNode }) {
@@ -119,6 +120,26 @@ export default function Contact() {
                 )}
               </li>
             ))}
+            <li className="flex flex-wrap items-center justify-between gap-4 py-5">
+              <span className="text-[13px] uppercase tracking-[0.25em] text-mute">GitHub</span>
+              <div className="flex flex-wrap gap-6">
+                {profile.github.map((g) => (
+                  <a
+                    key={g.href}
+                    href={g.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group relative flex items-center gap-2 text-[15px] text-bone"
+                  >
+                    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden>
+                      <path d={siGithub.path} />
+                    </svg>
+                    {g.label}
+                    <span className="absolute -bottom-1 left-0 h-px w-0 bg-accent transition-all group-hover:w-full" />
+                  </a>
+                ))}
+              </div>
+            </li>
             <li className="flex flex-wrap items-center justify-between gap-4 py-5">
               <span className="text-[13px] uppercase tracking-[0.25em] text-mute">Redes</span>
               <div className="flex gap-6">

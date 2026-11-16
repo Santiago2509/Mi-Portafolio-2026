@@ -134,6 +134,17 @@ export default function Projects() {
                       </span>
                     ))}
                   </div>
+                  <div className="flex items-center gap-4">
+                  {p.repo && (
+                    <a
+                      href={p.repo}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-[12px] font-semibold uppercase tracking-[0.15em] text-bone/85 transition-colors hover:text-glow"
+                    >
+                      Código ↗
+                    </a>
+                  )}
                   {p.href && (
                     <a
                       href={p.href}
@@ -145,6 +156,7 @@ export default function Projects() {
                       <span className="flex h-7 w-7 items-center justify-center rounded-full bg-ink text-bone transition-transform duration-300 group-hover/btn:rotate-45">↗</span>
                     </a>
                   )}
+                  </div>
                 </div>
               </div>
             </div>
