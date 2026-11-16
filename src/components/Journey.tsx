@@ -38,6 +38,14 @@ export default function Journey() {
           scrollTrigger: { trigger: ".tl-list", start: "top 70%", end: "bottom 65%", scrub: true },
         },
       );
+      gsap.from(".tl-seg", {
+        scaleX: 0,
+        transformOrigin: "left",
+        stagger: 0.07,
+        duration: 0.5,
+        ease: "power2.out",
+        scrollTrigger: { trigger: ".tl-seg", start: "top 85%" },
+      });
       gsap.utils.toArray<HTMLElement>(".tl-item").forEach((el) => {
         gsap.from(el, {
           x: 40,
@@ -57,13 +65,13 @@ export default function Journey() {
         {/* Left: title + numbers (sticky on desktop) */}
         <div className="lg:sticky lg:top-28 lg:self-start">
           <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-glow">
-            <span className="h-px w-10 bg-accent" /> 02 · Experiencia
+            Experiencia
           </p>
           <h2 className="font-display text-6xl uppercase leading-[0.9] md:text-8xl">
             Mi <span className="font-serif normal-case italic text-glow">recorrido</span>
           </h2>
           <p className="mt-6 max-w-sm text-sm leading-relaxed text-bone/60">
-            Lo que he estudiado, dónde he trabajado y lo que he construido hasta hoy.
+            Lo que he estudiado y lo que he construido hasta hoy.
           </p>
           <div className="stats mt-12 grid grid-cols-3 gap-4 border-t border-bone/10 pt-8">
             {stats.map((s) => (
@@ -103,6 +111,28 @@ export default function Journey() {
                 <h3 className="mt-3 font-display text-3xl uppercase leading-none text-bone md:text-4xl">{t.title}</h3>
                 <p className="mt-1 font-serif text-xl italic text-glow">{t.place}</p>
                 <p className="mt-4 max-w-xl text-sm leading-relaxed text-bone/60">{t.text}</p>
+                {t.progress && (
+                  <div className="mt-5 max-w-md">
+                    <div className="flex items-baseline justify-between text-[11px] uppercase tracking-[0.2em]">
+                      <span className="text-bone/70">
+                        {t.progress.done}.º {t.progress.unit}
+                      </span>
+                      <span className="text-mute">
+                        de {t.progress.total}
+                      </span>
+                    </div>
+                    <div className="mt-2 flex gap-1">
+                      {Array.from({ length: t.progress.total }, (_, k) => (
+                        <span
+                          key={k}
+                          className={`tl-seg h-1.5 flex-1 rounded-full ${
+                            k < t.progress!.done ? "bg-glow shadow-[0_0_8px_rgba(169,149,255,0.6)]" : "bg-bone/10"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
                 <div className="mt-5 flex flex-wrap gap-2">
                   {t.tags.map((tag) => (
                     <span

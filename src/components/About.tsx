@@ -38,7 +38,7 @@ export default function About() {
           opacity: 1,
           stagger: 0.05,
           ease: "none",
-          scrollTrigger: { trigger: ".about-statement", start: "top 75%", end: "bottom 45%", scrub: true },
+          scrollTrigger: { trigger: ".about-statement", start: "top 92%", end: "bottom 72%", scrub: true },
         },
       );
       gsap.from(".about-fact", {
@@ -53,7 +53,8 @@ export default function About() {
     return () => ctx.revert();
   }, []);
 
-  const highlight = new Set(["ingeniero", "software:", "productos", "reales.", "funcione."]);
+  const highlight = new Set(about.highlight);
+  const clean = (w: string) => w.toLowerCase().replace(/[.,:;]/g, "");
 
   return (
     <section ref={root} id="sobre-mi" className="relative bg-ink px-5 pb-24 pt-32 md:px-10 md:pb-40 md:pt-48">
@@ -76,19 +77,16 @@ export default function About() {
               />
             </div>
           </div>
-          <p className="absolute -bottom-8 right-0 font-script text-4xl text-glow md:-right-8 md:text-5xl">
-            sin filtros
-          </p>
         </div>
 
         {/* Text */}
         <div>
           <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-glow">
-            <span className="h-px w-10 bg-accent" /> 01 · {about.kicker}
+            {about.kicker}
           </p>
-          <p className="about-statement font-display text-[2.1rem] uppercase leading-[1.05] md:text-6xl">
+          <p className="about-statement font-display text-[2rem] uppercase leading-[1.05] md:text-[3.4rem]">
             {about.statement.split(" ").map((w, i) => (
-              <span key={i} className={`about-word ${highlight.has(w) ? "text-glow" : "text-bone"}`}>
+              <span key={i} className={`about-word ${highlight.has(clean(w)) ? "text-glow" : "text-bone"}`}>
                 {w}{" "}
               </span>
             ))}
@@ -97,7 +95,7 @@ export default function About() {
             {about.facts.map((f) => (
               <div key={f.k} className="about-fact">
                 <p className="text-[11px] uppercase tracking-[0.25em] text-mute">{f.k}</p>
-                <p className="mt-2 font-serif text-2xl italic text-bone">{f.v}</p>
+                <p className="mt-2 font-serif text-xl italic text-bone md:text-2xl">{f.v}</p>
               </div>
             ))}
           </div>

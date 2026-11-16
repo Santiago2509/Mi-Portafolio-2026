@@ -12,7 +12,7 @@ export const profile = {
   // Habilidades complementarias (se muestran como línea secundaria)
   specialties: ["Full-stack", "Web", "UI", "3D"],
   tagline:
-    "Diseño y construyo software de punta a punta: arquitectura sólida, código limpio y productos que la gente disfruta usar.",
+    "Creo páginas y aplicaciones web de principio a fin: desde la idea y el diseño hasta el código que las hace funcionar.",
   location: "Colombia", // TODO
   available: true,
   email: "hola@tudominio.com", // TODO
@@ -26,18 +26,20 @@ export const profile = {
 
 // Se muestran en la sección "Experiencia"
 export const stats = [
-  { value: 3, suffix: "+", label: "Años programando" }, // TODO
-  { value: 20, suffix: "+", label: "Proyectos construidos" }, // TODO
-  { value: 30, suffix: "+", label: "Tecnologías" },
+  { value: 3, suffix: "", label: "Años programando" }, // desde 2024
+  { value: 30, suffix: "+", label: "Proyectos construidos" }, // TODO: confirma la cifra
+  { value: 50, suffix: "+", label: "Tecnologías" },
 ];
 
 export const about = {
-  kicker: "Así soy yo",
+  kicker: "Sobre mí",
   statement:
-    "Sin gafas, sin pose. Soy ingeniero de software: me obsesionan los detalles, aprendo rápido y convierto problemas en productos reales. Me gusta que lo que construyo se vea bien, pero sobre todo que funcione.",
+    "Hola, soy Santiago. Soy ingeniero de software y me dedico a crear páginas y aplicaciones web de principio a fin: desde la idea y el diseño hasta el código que las hace funcionar. Me encanta aprender algo nuevo cada día y construir cosas que de verdad le sirvan a la gente.",
+  // palabras resaltadas en el texto
+  highlight: ["ingeniero", "software", "aplicaciones", "web", "sirvan"],
   facts: [
-    { k: "Base", v: "Colombia" }, // TODO
-    { k: "Profesión", v: "Ingeniero de Software" },
+    { k: "Estudio", v: "Ingeniería de Software · 6.º semestre" },
+    { k: "Enfoque", v: "Desarrollo web full-stack" },
     { k: "Ahora", v: "Abierto a proyectos" },
   ],
 };
@@ -128,28 +130,31 @@ export const services = [
 ];
 
 // TODO: tu experiencia y estudios reales
-export const timeline = [
+export const timeline: {
+  period: string;
+  title: string;
+  place: string;
+  now?: boolean;
+  text: string;
+  tags: string[];
+  progress?: { done: number; total: number; unit: string };
+}[] = [
   {
-    period: "2025 — Ahora",
-    title: "Ingeniero de Software Freelance",
-    place: "Independiente",
-    now: true,
-    text: "Diseño y desarrollo productos web de punta a punta: desde la arquitectura y la base de datos hasta la interfaz y el despliegue.",
-    tags: ["Full-stack", "Arquitectura", "Cloud"],
-  },
-  {
-    period: "2024 — 2025",
-    title: "Desarrollador Full-stack",
-    place: "Nombre de la empresa",
-    text: "Construcción de APIs, integración de servicios y desarrollo de interfaces para aplicaciones en producción.",
-    tags: ["APIs", "React", "SQL"],
-  },
-  {
-    period: "2021 — 2025",
+    period: "2024 — Actualidad",
     title: "Ingeniería de Software",
-    place: "Tu universidad",
-    text: "Formación en ingeniería: algoritmos, estructuras de datos, bases de datos, arquitectura y gestión de proyectos de software.",
-    tags: ["Pregrado"],
+    place: "Universidad Cooperativa de Colombia",
+    now: true,
+    text: "Pregrado en curso. Formación en programación, algoritmos y estructuras de datos, bases de datos, arquitectura de software y gestión de proyectos.",
+    tags: ["Pregrado", "En curso"],
+    progress: { done: 6, total: 9, unit: "semestre" },
+  },
+  {
+    period: "2025 — Actualidad",
+    title: "Tecnólogo en Análisis y Desarrollo de Software",
+    place: "Formación tecnológica", // TODO: nombre de la institución
+    now: true,
+    text: "Formación práctica en análisis de requisitos, desarrollo de aplicaciones, bases de datos y metodologías ágiles, trabajando en proyectos reales.",
+    tags: ["Tecnología", "En curso"],
   },
 ];
 

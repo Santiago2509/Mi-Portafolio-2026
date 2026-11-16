@@ -77,7 +77,7 @@ export default function Contact() {
       <div className="relative mx-auto grid max-w-[1400px] gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
         <div>
           <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-glow">
-            <span className="h-px w-10 bg-accent" /> 05 · Contacto
+            Contacto
           </p>
           <h2 className="contact-title font-display text-[17vw] uppercase leading-[0.85] lg:text-[9vw]">
             <span className="contact-line block overflow-hidden">

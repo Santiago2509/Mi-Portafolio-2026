@@ -16,7 +16,6 @@ export default function Hero({ ready }: { ready: boolean }) {
   const reveal = useRef(0); // 0 = hologram, 1 = human (driven by scroll)
   const pct = useRef<HTMLSpanElement>(null);
   const bar = useRef<HTMLSpanElement>(null);
-  const mode = useRef<HTMLSpanElement>(null);
   const [el, setEl] = useState<HTMLElement | null>(null);
 
   // Hidden initial state + pinned scroll transformation (created on mount so later sections measure correctly)
@@ -40,7 +39,6 @@ export default function Hero({ ready }: { ready: boolean }) {
               holo.reveal = r; // the page-wide network bursts out at 1
               if (pct.current) pct.current.textContent = String(Math.round(r * 100)).padStart(3, "0");
               if (bar.current) bar.current.style.transform = `scaleX(${r})`;
-              if (mode.current) mode.current.textContent = r >= 1 ? "Humano" : r > 0.01 ? "Mutando" : "Máquina";
             },
           },
         })
@@ -109,14 +107,14 @@ export default function Hero({ ready }: { ready: boolean }) {
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[38%] bg-gradient-to-t from-ink via-ink/70 to-transparent" />
 
       {/* Left column */}
-      <div className="absolute bottom-8 left-5 z-10 max-w-[190px] md:bottom-14 md:left-10 md:max-w-[360px]">
+      <div className="absolute bottom-8 left-5 z-10 max-w-[210px] md:bottom-14 md:left-10 md:max-w-[400px]">
         <p className="hero-fade font-script text-4xl text-bone md:text-5xl">Hola, soy</p>
-        <h1 className="hero-fade mt-1 font-display text-4xl uppercase leading-[0.95] text-bone md:text-6xl">
+        <h1 className="hero-fade mt-1 font-display text-3xl uppercase leading-[0.95] text-bone md:text-5xl">
           {profile.name}
           {profile.lastName && <br />}
           {profile.lastName}
         </h1>
-        <p className="hero-fade mt-3 font-display text-lg uppercase tracking-wide text-glow md:text-2xl">
+        <p className="hero-fade mt-3 bg-gradient-to-r from-glow via-[#c9bcff] to-bone bg-clip-text font-display text-[2rem] uppercase leading-[0.92] text-transparent drop-shadow-[0_0_24px_rgba(169,149,255,0.35)] md:text-[3.4rem]">
           {profile.role}
         </p>
         <p className="hero-fade mt-1 text-[10px] uppercase tracking-[0.2em] text-bone/50 md:text-[11px] md:tracking-[0.3em]">
@@ -135,31 +133,16 @@ export default function Hero({ ready }: { ready: boolean }) {
         </button>
       </div>
 
-      {/* Right: identity panel (glass) */}
-      <div className="hero-fade absolute bottom-8 right-4 z-10 w-[148px] rounded-2xl border border-bone/10 bg-bone/[0.04] p-3 backdrop-blur-md md:bottom-14 md:right-10 md:w-[260px] md:p-5">
-        <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-bone/50">
-          <span className="hidden md:inline">identidad.sys</span>
-          <span className="flex items-center gap-1.5">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-glow" />
-            <span ref={mode}>Máquina</span>
-          </span>
-        </div>
-        <p className="mt-3 font-display text-3xl leading-none text-bone md:text-5xl">
+      {/* Right: discreet transformation counter */}
+      <div className="hero-fade absolute bottom-8 right-5 z-10 w-[110px] text-right md:bottom-14 md:right-10 md:w-[150px]">
+        <p className="font-display text-2xl leading-none text-bone/80 md:text-3xl">
           <span ref={pct} className="tabular-nums">000</span>
           <span className="text-glow">%</span>
-          <span className="mt-1 block font-sans text-[10px] uppercase tracking-[0.25em] text-bone/50 md:ml-2 md:mt-0 md:inline md:align-middle">humano</span>
         </p>
-        <span className="mt-3 block h-px w-full bg-bone/15">
-          <span ref={bar} className="block h-px w-full origin-left scale-x-0 bg-glow shadow-[0_0_12px_2px_rgba(169,149,255,0.7)]" />
+        <span className="mt-2 block h-px w-full bg-bone/15">
+          <span ref={bar} className="block h-px w-full origin-left scale-x-0 bg-glow shadow-[0_0_10px_1px_rgba(169,149,255,0.7)]" />
         </span>
-        <p className="hero-hint mt-3 text-[10px] uppercase leading-relaxed tracking-[0.2em] text-bone/45">
-          Haz scroll para transformar
-        </p>
-      </div>
-
-      {/* Top-right label */}
-      <div className="absolute right-10 top-[72px] z-10 hidden text-[11px] uppercase tracking-[0.3em] text-bone/50 md:block">
-        <span className="hero-fade inline-block">{profile.location} · 2026</span>
+        <p className="hero-hint mt-2 text-[9px] uppercase tracking-[0.25em] text-bone/40 md:text-[10px]">Scroll ↓</p>
       </div>
     </section>
   );

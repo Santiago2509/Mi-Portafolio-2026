@@ -77,7 +77,7 @@ export default function Skills() {
       <div className="pointer-events-none absolute left-1/2 top-1/4 h-[60vmin] w-[60vmin] -translate-x-1/2 rounded-full bg-accent/20 blur-[140px]" />
       <div className="relative mx-auto max-w-[1400px]">
         <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-glow">
-          <span className="h-px w-10 bg-accent" /> 04 · Herramientas
+          Herramientas
         </p>
         <div className="grid items-center gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
           <div>

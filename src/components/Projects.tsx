@@ -66,7 +66,7 @@ export default function Projects() {
         {/* Intro panel */}
         <div className="flex shrink-0 flex-col justify-center md:w-[38vw] md:pr-10">
           <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-glow">
-            <span className="h-px w-10 bg-accent" /> 03 · Proyectos
+            Proyectos
           </p>
           <h2 className="font-display text-6xl uppercase leading-[0.9] md:text-[7vw]">
             Trabajo que
