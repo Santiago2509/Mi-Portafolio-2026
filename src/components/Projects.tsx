@@ -6,19 +6,32 @@ import { projects, type Project } from "@/data/content";
 
 function Visual({ p, i }: { p: Project; i: number }) {
   if (p.image) {
-    return <Image src={p.image} alt={p.title} fill sizes="(max-width:768px) 90vw, 50vw" className="object-cover" />;
+    const host = p.href ? new URL(p.href).host : "";
+    return (
+      <div className="absolute inset-0 flex flex-col">
+        {/* browser frame */}
+        <div className="flex h-8 shrink-0 items-center gap-2 border-b border-bone/10 bg-[#121016] px-3">
+          <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+          <span className="ml-3 truncate rounded-md bg-bone/[0.06] px-3 py-0.5 text-[12px] text-bone/70">{host}</span>
+        </div>
+        <div className="relative flex-1 overflow-hidden">
+          <Image
+            src={p.image}
+            alt={`Captura del sitio ${p.title}`}
+            fill
+            sizes="(max-width:768px) 92vw, 44vw"
+            className="project-shot object-cover object-top transition-transform duration-[1.2s] ease-out group-hover:scale-[1.04]"
+          />
+        </div>
+      </div>
+    );
   }
-  // Placeholder art until real screenshots exist
   return (
     <div className="absolute inset-0 overflow-hidden" style={{ background: `radial-gradient(circle at 70% 30%, ${p.accent}, #000000 70%)` }}>
-      <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(#f1eff722_1px,transparent_1px),linear-gradient(90deg,#f1eff722_1px,transparent_1px)] [background-size:40px_40px]" />
-      <span className="absolute -bottom-6 -left-2 font-display text-[9rem] uppercase leading-none text-bone/90 md:text-[12rem]">
-        {p.title}
-      </span>
-      <span className="absolute right-5 top-4 font-serif text-xl italic text-bone/80">{p.category}</span>
-      <div className="absolute right-6 top-1/3 h-28 w-28 rounded-full border border-bone/40 md:h-40 md:w-40" style={{ transform: `rotate(${i * 30}deg)` }}>
-        <div className="absolute left-1/2 top-0 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-bone" />
-      </div>
+      <span className="absolute -bottom-6 -left-2 font-display text-[9rem] uppercase leading-none text-bone/90">{p.title}</span>
+      <span className="absolute right-5 top-4 font-serif text-xl italic text-bone/80">{i + 1}</span>
     </div>
   );
 }
@@ -45,10 +58,11 @@ export default function Projects() {
         },
       });
       gsap.utils.toArray<HTMLElement>(".project-card").forEach((card) => {
+        // cards rise and tilt into place as they slide in
         gsap.fromTo(
-          card.querySelector(".project-visual"),
-          { scale: 1.2 },
-          { scale: 1, ease: "none", scrollTrigger: { trigger: card, containerAnimation: tween, start: "left right", end: "center center", scrub: true } },
+          card,
+          { y: 70, rotate: 2.5, opacity: 0.35 },
+          { y: 0, rotate: 0, opacity: 1, ease: "none", scrollTrigger: { trigger: card, containerAnimation: tween, start: "left right", end: "left 45%", scrub: true } },
         );
       });
     });
@@ -69,12 +83,12 @@ export default function Projects() {
             Proyectos
           </p>
           <h2 className="font-display text-6xl uppercase leading-[0.9] md:text-[7vw]">
-            Trabajo que
+            Proyectos
             <br />
-            <span className="font-serif normal-case italic text-glow">habla</span> solo
+            <span className="font-serif normal-case italic text-glow">en vivo</span>
           </h2>
           <p className="mt-6 max-w-sm text-[15px] leading-relaxed text-bone/78">
-            Una selección de lo que he construido. Desliza para ver cada uno.
+            Proyectos reales, en producción y usados por negocios. Desliza para ver cada uno.
           </p>
           <span className="mt-10 hidden items-center gap-3 text-[13px] uppercase tracking-[0.3em] text-bone/72 md:flex">
             Scroll <span className="inline-block h-px w-16 bg-bone/30" /> →
@@ -82,41 +96,59 @@ export default function Projects() {
         </div>
 
         {projects.map((p, i) => (
-          <a
-            key={p.title}
-            href={p.href ?? "#"}
-            target={p.href ? "_blank" : undefined}
-            rel="noreferrer"
-            data-cursor="Ver"
-            className="project-card group block shrink-0 md:w-[46vw] lg:w-[40vw]"
-          >
-            <div className="relative aspect-[4/3] overflow-hidden rounded-sm bg-ash">
-              <div className="project-visual absolute inset-0 transition-transform duration-700 group-hover:scale-105">
+          <article key={p.title} className="project-card group shrink-0 md:w-[46vw] lg:w-[40vw]">
+            <a
+              href={p.href ?? "#"}
+              target="_blank"
+              rel="noreferrer"
+              data-cursor="Abrir"
+              className="relative block aspect-[16/10] overflow-hidden rounded-xl border border-bone/10 bg-ash shadow-[0_30px_80px_-30px_rgba(109,77,255,0.45)] transition-colors duration-500 hover:border-glow/50"
+            >
+              <div className="project-visual absolute inset-0">
                 <Visual p={p} i={i} />
               </div>
-              <div className="absolute inset-0 bg-accent/0 mix-blend-multiply transition-colors duration-500 group-hover:bg-accent/30" />
-            </div>
-            <div className="mt-5 flex items-start justify-between gap-6 border-b border-bone/10 pb-5">
-              <div className="flex items-start gap-5">
-                <span className="font-display text-4xl text-glow">0{i + 1}</span>
-                <div>
-                  <h3 className="font-display text-2xl uppercase tracking-wide">{p.title}</h3>
+            </a>
+            <div className="mt-5 flex items-start gap-5">
+              <span className="font-display text-4xl leading-none text-glow">0{i + 1}</span>
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                  <h3 className="font-display text-3xl uppercase leading-none tracking-wide">{p.title}</h3>
                   <p className="text-[13px] uppercase tracking-[0.2em] text-mute">
                     {p.category} · {p.year}
                   </p>
-                  <p className="mt-3 max-w-md text-[15px] text-bone/78">{p.description}</p>
-                  <div className="mt-3 flex flex-wrap gap-2">
+                </div>
+                <p className="mt-3 text-[15px] leading-relaxed text-bone/82">{p.description}</p>
+                <ul className="mt-3 grid grid-cols-1 gap-x-4 gap-y-1.5 sm:grid-cols-2">
+                  {p.features.map((f) => (
+                    <li key={f} className="flex items-center gap-2 text-[14px] text-bone/90">
+                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-accent/25 text-[10px] text-glow">✓</span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex flex-wrap gap-2">
                     {p.tags.map((t) => (
                       <span key={t} className="rounded-full border border-bone/15 px-3 py-1 text-[12px] uppercase tracking-widest text-bone/82">
                         {t}
                       </span>
                     ))}
                   </div>
+                  {p.href && (
+                    <a
+                      href={p.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group/btn inline-flex items-center gap-2 rounded-full bg-bone py-1.5 pl-4 pr-1.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-ink transition-colors hover:bg-accent hover:text-bone"
+                    >
+                      Ver sitio
+                      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-ink text-bone transition-transform duration-300 group-hover/btn:rotate-45">↗</span>
+                    </a>
+                  )}
                 </div>
               </div>
-              <span className="text-2xl text-bone/78 transition-all duration-300 group-hover:-rotate-45 group-hover:text-glow">→</span>
             </div>
-          </a>
+          </article>
         ))}
         <div className="hidden w-[10vw] shrink-0 md:block" />
       </div>

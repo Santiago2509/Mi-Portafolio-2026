@@ -49,45 +49,110 @@ export type Project = {
   category: string;
   year: string;
   description: string;
+  features: string[];
   tags: string[];
-  href?: string;
-  image?: string; // ruta en /public/images/projects/...
-  accent: string; // color del visual provisional
+  href?: string; // sitio en vivo
+  repo?: string; // código en GitHub
+  image?: string; // miniatura en /public/images/projects/...
+  accent: string; // color de la miniatura generada (si no hay imagen)
 };
 
-// TODO: reemplaza por tus proyectos reales
+// Proyectos principales (con sitio en vivo)
 export const projects: Project[] = [
   {
-    title: "Nocturna",
-    category: "E-commerce",
+    title: "Floristería Violeta",
+    category: "E-commerce · Cali",
     year: "2026",
-    description: "Tienda de moda urbana con checkout rápido y catálogo animado.",
-    tags: ["Next.js", "Stripe", "GSAP"],
-    accent: "#6d4dff",
-  },
-  {
-    title: "Pulse",
-    category: "Dashboard",
-    year: "2025",
-    description: "Panel de métricas en tiempo real con visualizaciones a medida.",
-    tags: ["React", "D3", "Node"],
-    accent: "#3b82f6",
-  },
-  {
-    title: "Eclipse",
-    category: "Landing 3D",
-    year: "2025",
-    description: "Lanzamiento de producto con escena 3D interactiva en el navegador.",
-    tags: ["Three.js", "R3F", "Blender"],
+    description:
+      "Sitio web para una floristería de Cali: catálogo de arreglos florales con pedidos directos por WhatsApp y un panel para que la tienda gestione todo sola.",
+    features: [
+      "Catálogo inteligente por ocasión",
+      "Panel de administración",
+      "Subir y destacar productos",
+      "SEO para aparecer en Google",
+    ],
+    tags: ["Next.js", "TypeScript", "Supabase", "Cloudinary", "Tailwind"],
+    href: "https://web-floristeria-violeta.vercel.app",
+    image: "/images/projects/floristeria-violeta.webp",
     accent: "#8b5cf6",
   },
   {
-    title: "Ritmo",
-    category: "App móvil",
-    year: "2024",
-    description: "App para descubrir eventos y música en tu ciudad.",
-    tags: ["React Native", "Firebase"],
-    accent: "#4f46e5",
+    title: "AirPods Nariño",
+    category: "E-commerce · Pasto",
+    year: "2026",
+    description:
+      "Tienda de accesorios Apple con garantía directa en Pasto y todo Nariño, con catálogo administrable y una contabilidad privada para el negocio.",
+    features: [
+      "Catálogo inteligente",
+      "Panel de administración",
+      "Contabilidad privada básica",
+      "SEO para aparecer en Google",
+    ],
+    tags: ["Next.js", "TypeScript", "Supabase", "Zustand", "Tailwind"],
+    href: "https://airpodsnarinoweb.vercel.app",
+    image: "/images/projects/airpods-narino.webp",
+    accent: "#3b82f6",
+  },
+  {
+    title: "Libre de Ansiedad",
+    category: "Plataforma de membresías",
+    year: "2026",
+    description:
+      "Plataforma para la clínica Libre de Ansiedad que vende membresías y cobra automáticamente a cada cliente mes a mes, con un aula virtual para los suscriptores.",
+    features: [
+      "Cobros recurrentes automáticos",
+      "Pagos con ePayco",
+      "Aula virtual para suscriptores",
+      "Panel de suscriptores y contenido",
+    ],
+    tags: ["Next.js", "TypeScript", "Supabase", "ePayco"],
+    href: "https://membresia-lda.vercel.app",
+    image: "/images/projects/libre-de-ansiedad.webp",
+    accent: "#0ea5e9",
+  },
+];
+
+// Otros proyectos (sección "Ver más")
+export const moreProjects: (Pick<Project, "title" | "category" | "description" | "tags" | "href" | "repo"> & {
+  team?: boolean;
+})[] = [
+  {
+    title: "CreatorCV",
+    category: "App web con IA",
+    description: "Editor de hojas de vida con plantillas, vista previa en tiempo real, exportación a PDF y un asistente de IA para redactar.",
+    tags: ["React", "Supabase", "Spring Boot", "IA"],
+    repo: "https://github.com/Santiago25-lab/creator-frontend",
+  },
+  {
+    title: "Observability Hub",
+    category: "Monitoreo de microservicios",
+    description: "Panel que monitorea microservicios a través de un proxy de auditoría, con métricas en vivo y gráficas.",
+    tags: ["Java 21", "Spring Boot", "React", "Recharts"],
+    href: "https://tallerproxy.vercel.app",
+    repo: "https://github.com/Santiago2509/Taller-proxy",
+  },
+  {
+    title: "Catálogo de Joyas 3D",
+    category: "Visor 3D interactivo",
+    description: "Catálogo de joyería donde cada pieza se gira 360°, se acerca al detalle y cambia de metal en tiempo real.",
+    tags: ["React", "TypeScript", "Three.js"],
+    repo: "https://github.com/Santiago2509/Modelo-joyas-",
+  },
+  {
+    title: "Clickeable",
+    category: "Juego educativo",
+    description: "Minijuegos para aprender a reconocer estafas digitales, enlaces maliciosos y phishing antes de hacer clic.",
+    tags: ["Angular", "TypeScript"],
+    repo: "https://github.com/davidluna301/Clickable",
+    team: true,
+  },
+  {
+    title: "Proyecto Ares",
+    category: "Backend en Java",
+    description: "Simulación por turnos de colonias humanas en Marte: módulos, tripulación, recursos, robots y emergencias.",
+    tags: ["Java", "POO"],
+    repo: "https://github.com/Santiago2509/Proyecto-Ares",
+    team: true,
   },
 ];
 

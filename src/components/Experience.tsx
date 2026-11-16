@@ -8,6 +8,7 @@ import Hero from "./Hero";
 import About from "./About";
 import Journey from "./Journey";
 import Projects from "./Projects";
+import MoreProjects from "./MoreProjects";
 import Skills from "./Skills";
 import Contact from "./Contact";
 import Network from "./Network";
@@ -30,6 +31,7 @@ export default function Experience() {
         <About />
         <Journey />
         <Projects />
+        <MoreProjects />
         <Skills />
         <Contact />
       </main>
