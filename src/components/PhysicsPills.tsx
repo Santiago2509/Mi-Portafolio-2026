@@ -1,11 +1,28 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Matter from "matter-js";
+
+const MAX_TILT = 0.2; // rad (~11°): the words always stay readable, never sideways or upside down
+
+// visual styles, cycled so neighbouring pills look different
+const STYLES = [
+  "bg-accent text-bone",
+  "bg-bone text-ink",
+  "border border-bone/40 bg-ink text-bone",
+  "bg-glow text-ink",
+  "border border-glow/60 bg-accent/10 text-glow",
+];
 
 /** DOM pills driven by Matter.js. They drop in when visible and can be dragged/thrown. */
 export default function PhysicsPills({ items }: { items: string[] }) {
   const box = useRef<HTMLDivElement>(null);
   const pills = useRef<(HTMLDivElement | null)[]>([]);
+  // fewer pills on small screens so they fit the box
+  const [list, setList] = useState(items);
+
+  useEffect(() => {
+    if (window.innerWidth < 768) setList(items.slice(0, 16));
+  }, [items]);
 
   useEffect(() => {
     const el = box.current!;
@@ -14,7 +31,7 @@ export default function PhysicsPills({ items }: { items: string[] }) {
 
     const start = () => {
       started = true;
-      const { Engine, Bodies, Composite, Mouse, MouseConstraint, Body } = Matter;
+      const { Engine, Bodies, Composite, Mouse, MouseConstraint, Body, Events } = Matter;
       const engine = Engine.create({ gravity: { x: 0, y: 1.1 } });
       const W = el.clientWidth;
       const H = el.clientHeight;
@@ -24,23 +41,38 @@ export default function PhysicsPills({ items }: { items: string[] }) {
         Bodies.rectangle(-t / 2, H / 2, t, H * 4, { isStatic: true }),
         Bodies.rectangle(W + t / 2, H / 2, t, H * 4, { isStatic: true }),
       ];
-      const bodies = pills.current.map((p, i) => {
+      const nodes = pills.current.slice(0, list.length);
+      const bodies = nodes.map((p, i) => {
         const w = p!.offsetWidth;
         const h = p!.offsetHeight;
         const b = Bodies.rectangle(
-          40 + Math.random() * (W - 80),
-          -60 - i * 45,
+          w / 2 + 10 + Math.random() * Math.max(1, W - w - 20),
+          -60 - i * 38,
           w,
           h,
-          { chamfer: { radius: h / 2 }, restitution: 0.5, friction: 0.2, density: 0.002 },
+          { chamfer: { radius: h / 2 }, restitution: 0.35, friction: 0.35, frictionAir: 0.012, density: 0.002 },
         );
-        Body.setAngle(b, (Math.random() - 0.5) * 0.8);
+        Body.setAngle(b, (Math.random() - 0.5) * MAX_TILT * 2);
         return b;
       });
       Composite.add(engine.world, [...walls, ...bodies]);
 
+      // keep every pill upright: limit the tilt and pull it gently back towards level
+      Events.on(engine, "afterUpdate", () => {
+        for (const b of bodies) {
+          let a = b.angle;
+          if (a > MAX_TILT || a < -MAX_TILT) {
+            a = Math.max(-MAX_TILT, Math.min(MAX_TILT, a));
+            Body.setAngle(b, a);
+            Body.setAngularVelocity(b, 0);
+          } else {
+            Body.setAngularVelocity(b, b.angularVelocity * 0.9 - a * 0.004);
+          }
+        }
+      });
+
       const mouse = Mouse.create(el);
-      // let the page scroll over the canvas area
+      // let the page scroll over the box
       const m = mouse as unknown as { element: HTMLElement; mousewheel: EventListener };
       m.element.removeEventListener("wheel", m.mousewheel);
       m.element.removeEventListener("mousewheel", m.mousewheel);
@@ -61,7 +93,7 @@ export default function PhysicsPills({ items }: { items: string[] }) {
           acc -= STEP;
         }
         bodies.forEach((b, i) => {
-          const p = pills.current[i];
+          const p = nodes[i];
           if (!p) return;
           p.style.transform = `translate(${b.position.x - p.offsetWidth / 2}px, ${b.position.y - p.offsetHeight / 2}px) rotate(${b.angle}rad)`;
           p.style.opacity = "1";
@@ -87,18 +119,18 @@ export default function PhysicsPills({ items }: { items: string[] }) {
       io.disconnect();
       cleanup();
     };
-  }, []);
+  }, [list]);
 
   return (
-    <div ref={box} className="relative h-[360px] w-full touch-pan-y select-none overflow-hidden md:h-[420px]">
-      {items.map((t, i) => (
+    <div ref={box} className="relative h-[480px] w-full touch-pan-y select-none overflow-hidden md:h-[440px]">
+      {list.map((t, i) => (
         <div
           key={t}
           ref={(n) => {
             pills.current[i] = n;
           }}
-          className={`absolute left-0 top-0 cursor-grab whitespace-nowrap rounded-full px-6 py-3 font-display text-lg uppercase tracking-wide opacity-0 active:cursor-grabbing md:px-8 md:py-4 md:text-2xl ${
-            i % 3 === 0 ? "bg-accent text-bone" : i % 3 === 1 ? "bg-bone text-ink" : "border border-bone/40 bg-ink text-bone"
+          className={`absolute left-0 top-0 cursor-grab whitespace-nowrap rounded-full px-5 py-2.5 font-display text-base uppercase tracking-wide opacity-0 active:cursor-grabbing md:px-7 md:py-3.5 md:text-2xl ${
+            STYLES[i % STYLES.length]
           }`}
         >
           {t}
