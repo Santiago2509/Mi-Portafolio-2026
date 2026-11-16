@@ -22,8 +22,9 @@ export const profile = {
     { label: "@Santiago25-lab", href: "https://github.com/Santiago25-lab" },
   ],
   socials: [
-    { label: "LinkedIn", href: "#" }, // TODO
-    { label: "Instagram", href: "#" }, // TODO
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/santiago-urbina-172371339", icon: "linkedin" },
+    { label: "Instagram", href: "https://www.instagram.com/santiagou2_9", icon: "instagram" },
+    { label: "TikTok", href: "https://www.tiktok.com/@edwinsantiagourbi", icon: "tiktok" },
   ],
 };
 
