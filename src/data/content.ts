@@ -15,7 +15,7 @@ export const profile = {
     "Creo páginas y aplicaciones web de principio a fin: desde la idea y el diseño hasta el código que las hace funcionar.",
   location: "Colombia", // TODO
   available: true,
-  email: "hola@tudominio.com", // TODO
+  email: "santiagourbina2509@gmail.com",
   phone: "", // TODO
   github: [
     { label: "@Santiago2509", href: "https://github.com/Santiago2509" },
@@ -319,6 +319,20 @@ export const timeline: {
   tags: string[];
   progress?: { done: number; total: number; unit: string };
 }[] = [
+  {
+    period: "2026",
+    title: "Desarrollador Full-Stack Freelance",
+    place: "Independiente",
+    text: "Diseño, desarrollo y administro sistemas para clientes reales: tiendas en línea, paneles administrativos, plataformas de membresías y sistemas de gestión, desde la idea hasta el despliegue y el soporte.",
+    tags: ["Clientes reales", "Full-stack", "Gestión de proyectos"],
+  },
+  {
+    period: "2026",
+    title: "Desarrollador Web",
+    place: "Clínica Libre de Ansiedad",
+    text: "Implementé la pasarela de pagos en el sitio WordPress de la clínica con WooCommerce para vender sus membresías en línea, y después desarrollé su plataforma propia de membresías con cobro recurrente.",
+    tags: ["WordPress", "WooCommerce", "Pasarela de pagos"],
+  },
   {
     period: "2024 — Actualidad",
     title: "Ingeniería de Software",

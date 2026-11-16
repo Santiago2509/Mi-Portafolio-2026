@@ -71,7 +71,7 @@ export default function Journey() {
             Mi <span className="font-serif normal-case italic text-glow">recorrido</span>
           </h2>
           <p className="mt-6 max-w-sm text-[15px] leading-relaxed text-bone/78">
-            Lo que he estudiado y lo que he construido hasta hoy.
+            Dónde he trabajado y lo que he estudiado hasta hoy.
           </p>
           <div className="stats mt-12 grid grid-cols-3 gap-5 border-t border-bone/10 pt-8">
             {stats.map((s) => (
