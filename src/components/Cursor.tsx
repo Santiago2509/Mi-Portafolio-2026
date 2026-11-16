@@ -60,7 +60,7 @@ export default function Cursor() {
           }`}
         >
           {label && (
-            <span className="text-[10px] font-semibold uppercase tracking-widest text-bone">{label}</span>
+            <span className="text-[12px] font-semibold uppercase tracking-widest text-bone">{label}</span>
           )}
         </div>
       </div>

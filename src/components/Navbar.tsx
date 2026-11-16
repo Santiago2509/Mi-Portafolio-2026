@@ -45,7 +45,7 @@ export default function Navbar() {
               <li key={l.id}>
                 <button
                   onClick={() => go(l.id)}
-                  className="group relative text-xs uppercase tracking-[0.25em] text-bone/80 transition-colors hover:text-bone"
+                  className="group relative text-[13px] uppercase tracking-[0.25em] text-bone/80 transition-colors hover:text-bone"
                 >
                   {l.label}
                   <span className="absolute -bottom-1 left-0 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full" />
@@ -56,7 +56,7 @@ export default function Navbar() {
 
           <div className="flex items-center gap-4">
             {profile.available && (
-              <span className="hidden items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-bone/82 sm:flex">
+              <span className="hidden items-center gap-2 text-[13px] uppercase tracking-[0.2em] text-bone/82 sm:flex">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-glow opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
@@ -89,7 +89,7 @@ export default function Navbar() {
             className="text-left font-display text-6xl uppercase text-ink"
             style={{ transitionDelay: `${i * 60}ms` }}
           >
-            <span className="mr-3 font-sans text-sm text-ink/60">0{i + 1}</span>
+            <span className="mr-3 font-sans text-[15px] text-ink/60">0{i + 1}</span>
             {l.label}
           </button>
         ))}

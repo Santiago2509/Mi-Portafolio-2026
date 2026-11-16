@@ -117,14 +117,14 @@ export default function Hero({ ready }: { ready: boolean }) {
         <p className="hero-fade mt-3 bg-gradient-to-r from-glow via-[#c9bcff] to-bone bg-clip-text font-display text-[2rem] uppercase leading-[0.92] text-transparent drop-shadow-[0_0_24px_rgba(169,149,255,0.35)] md:text-[3.4rem]">
           {profile.role}
         </p>
-        <p className="hero-fade mt-1 text-[10px] uppercase tracking-[0.2em] text-bone/72 md:text-[11px] md:tracking-[0.3em]">
+        <p className="hero-fade mt-1 text-[12px] uppercase tracking-[0.2em] text-bone/72 md:text-[13px] md:tracking-[0.3em]">
           {profile.specialties.join(" · ")}
         </p>
-        <p className="hero-fade mt-3 hidden text-sm leading-relaxed text-bone/78 md:block">{profile.tagline}</p>
+        <p className="hero-fade mt-3 hidden text-[15px] leading-relaxed text-bone/78 md:block">{profile.tagline}</p>
         <button
           onClick={() => scrollToId("proyectos")}
           data-cursor="Ver"
-          className="hero-fade group mt-6 hidden items-center gap-3 rounded-full bg-bone py-2 pl-6 pr-2 text-xs font-semibold uppercase tracking-[0.2em] text-ink transition-colors hover:bg-accent hover:text-bone md:inline-flex"
+          className="hero-fade group mt-6 hidden items-center gap-3 rounded-full bg-bone py-2 pl-6 pr-2 text-[13px] font-semibold uppercase tracking-[0.2em] text-ink transition-colors hover:bg-accent hover:text-bone md:inline-flex"
         >
           Ver mi trabajo
           <span className="flex h-9 w-9 items-center justify-center rounded-full bg-ink text-bone transition-transform duration-300 group-hover:rotate-45">
@@ -142,7 +142,7 @@ export default function Hero({ ready }: { ready: boolean }) {
         <span className="mt-2 block h-px w-full bg-bone/15">
           <span ref={bar} className="block h-px w-full origin-left scale-x-0 bg-glow shadow-[0_0_10px_1px_rgba(169,149,255,0.7)]" />
         </span>
-        <p className="hero-hint mt-2 text-[9px] uppercase tracking-[0.25em] text-bone/65 md:text-[10px]">Scroll ↓</p>
+        <p className="hero-hint mt-2 text-[11px] uppercase tracking-[0.25em] text-bone/65 md:text-[12px]">Scroll ↓</p>
       </div>
     </section>
   );

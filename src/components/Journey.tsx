@@ -64,23 +64,23 @@ export default function Journey() {
       <div className="mx-auto grid max-w-[1400px] gap-16 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
         {/* Left: title + numbers (sticky on desktop) */}
         <div className="lg:sticky lg:top-28 lg:self-start">
-          <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-glow">
+          <p className="mb-6 flex items-center gap-3 text-[13px] uppercase tracking-[0.3em] text-glow">
             Experiencia
           </p>
           <h2 className="font-display text-6xl uppercase leading-[0.9] md:text-8xl">
             Mi <span className="font-serif normal-case italic text-glow">recorrido</span>
           </h2>
-          <p className="mt-6 max-w-sm text-sm leading-relaxed text-bone/78">
+          <p className="mt-6 max-w-sm text-[15px] leading-relaxed text-bone/78">
             Lo que he estudiado y lo que he construido hasta hoy.
           </p>
-          <div className="stats mt-12 grid grid-cols-3 gap-4 border-t border-bone/10 pt-8">
+          <div className="stats mt-12 grid grid-cols-3 gap-5 border-t border-bone/10 pt-8">
             {stats.map((s) => (
               <div key={s.label} className="stat">
-                <p className="font-display text-5xl text-bone md:text-7xl">
+                <p className="font-display text-[2.6rem] leading-none text-bone md:text-7xl">
                   <span data-count={s.value}>0</span>
                   <span className="text-glow">{s.suffix}</span>
                 </p>
-                <p className="mt-2 text-[10px] uppercase leading-tight tracking-[0.2em] text-mute md:text-[11px]">
+                <p className="mt-2 text-[11px] uppercase leading-snug tracking-[0.08em] text-mute sm:text-[12px] md:text-[13px] md:tracking-[0.2em]">
                   {s.label}
                 </p>
               </div>
@@ -101,19 +101,19 @@ export default function Journey() {
               />
               <div className="rounded-2xl border border-bone/10 bg-bone/[0.03] p-6 backdrop-blur-sm transition-colors duration-500 group-hover:border-accent/60 group-hover:bg-accent/[0.07] md:p-8">
                 <div className="flex flex-wrap items-center justify-between gap-3">
-                  <p className="text-[11px] uppercase tracking-[0.25em] text-mute">{t.period}</p>
+                  <p className="text-[13px] uppercase tracking-[0.25em] text-mute">{t.period}</p>
                   {t.now && (
-                    <span className="rounded-full bg-accent px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-bone">
+                    <span className="rounded-full bg-accent px-3 py-1 text-[12px] font-semibold uppercase tracking-widest text-bone">
                       Ahora
                     </span>
                   )}
                 </div>
                 <h3 className="mt-3 font-display text-3xl uppercase leading-none text-bone md:text-4xl">{t.title}</h3>
                 <p className="mt-1 font-serif text-xl italic text-glow">{t.place}</p>
-                <p className="mt-4 max-w-xl text-sm leading-relaxed text-bone/78">{t.text}</p>
+                <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-bone/78">{t.text}</p>
                 {t.progress && (
                   <div className="mt-5 max-w-md">
-                    <div className="flex items-baseline justify-between text-[11px] uppercase tracking-[0.2em]">
+                    <div className="flex items-baseline justify-between text-[13px] uppercase tracking-[0.2em]">
                       <span className="text-bone/82">
                         {t.progress.done}.º {t.progress.unit}
                       </span>
@@ -137,7 +137,7 @@ export default function Journey() {
                   {t.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full border border-bone/15 px-3 py-1 text-[10px] uppercase tracking-widest text-bone/82"
+                      className="rounded-full border border-bone/15 px-3 py-1 text-[12px] uppercase tracking-widest text-bone/82"
                     >
                       {tag}
                     </span>

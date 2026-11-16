@@ -63,7 +63,7 @@ export default function Loader({ onReveal, onDone }: { onReveal: () => void; onD
             {String(count).padStart(3, "0")}
             <span className="text-glow">%</span>
           </span>
-          <span className="pb-2 text-[10px] uppercase tracking-[0.3em] text-mute">Portafolio · 2026</span>
+          <span className="pb-2 text-[12px] uppercase tracking-[0.3em] text-mute">Portafolio · 2026</span>
         </div>
         <span className="loader-item mt-4 block h-px w-full bg-bone/15">
           <span
@@ -71,7 +71,7 @@ export default function Loader({ onReveal, onDone }: { onReveal: () => void; onD
             style={{ transform: `scaleX(${count / 100})` }}
           />
         </span>
-        <div className="loader-item mt-4 h-[72px] font-mono text-[11px] leading-[18px] text-bone/78">
+        <div className="loader-item mt-4 h-[72px] font-mono text-[13px] leading-[18px] text-bone/78">
           {BOOT.slice(0, line + 1).map((t, i) => (
             <p key={t} className={i === line ? "text-glow" : ""}>
               <span className="text-bone/55">&gt;</span> {t}

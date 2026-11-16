@@ -76,7 +76,7 @@ export default function Contact() {
       <div className="pointer-events-none absolute bottom-0 right-0 h-[70vmin] w-[70vmin] translate-x-1/4 rounded-full bg-accent/25 blur-[140px]" />
       <div className="relative mx-auto grid max-w-[1400px] gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
         <div>
-          <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-glow">
+          <p className="mb-6 flex items-center gap-3 text-[13px] uppercase tracking-[0.3em] text-glow">
             Contacto
           </p>
           <h2 className="contact-title font-display text-[17vw] uppercase leading-[0.85] lg:text-[9vw]">
@@ -109,7 +109,7 @@ export default function Contact() {
           <ul className="mt-14 divide-y divide-bone/10 border-y border-bone/10">
             {rows.map((r) => (
               <li key={r.k} className="flex items-center justify-between py-5">
-                <span className="text-[11px] uppercase tracking-[0.25em] text-mute">{r.k}</span>
+                <span className="text-[13px] uppercase tracking-[0.25em] text-mute">{r.k}</span>
                 {r.href ? (
                   <a href={r.href} className="text-lg text-bone transition-colors hover:text-glow md:text-xl">
                     {r.v}
@@ -120,7 +120,7 @@ export default function Contact() {
               </li>
             ))}
             <li className="flex flex-wrap items-center justify-between gap-4 py-5">
-              <span className="text-[11px] uppercase tracking-[0.25em] text-mute">Redes</span>
+              <span className="text-[13px] uppercase tracking-[0.25em] text-mute">Redes</span>
               <div className="flex gap-6">
                 {profile.socials.map((s) => (
                   <a
@@ -128,7 +128,7 @@ export default function Contact() {
                     href={s.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="group relative text-sm uppercase tracking-[0.2em] text-bone"
+                    className="group relative text-[15px] uppercase tracking-[0.2em] text-bone"
                   >
                     {s.label}
                     <span className="absolute -bottom-1 left-0 h-px w-0 bg-accent transition-all group-hover:w-full" />
@@ -154,7 +154,7 @@ export default function Contact() {
 
       {/* Footer */}
       <footer className="relative mx-auto mt-10 max-w-[1600px]">
-        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-bone/10 py-6 text-[11px] uppercase tracking-[0.25em] text-bone/72">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-bone/10 py-6 text-[13px] uppercase tracking-[0.25em] text-bone/72">
           <span>© 2026 {profile.name}</span>
           <span>Hecho con código y actitud</span>
           <button onClick={() => scrollToId("inicio")} className="transition-colors hover:text-glow">

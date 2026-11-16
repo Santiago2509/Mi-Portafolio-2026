@@ -4,6 +4,7 @@ import { Canvas, useFrame, type ThreeEvent } from "@react-three/fiber";
 import { RoundedBox, ContactShadows, Environment, Lightformer, Sparkles } from "@react-three/drei";
 import * as THREE from "three";
 import { icons } from "@/data/icons";
+import { playKey } from "@/lib/keySound";
 
 type Skill = { icon: string; name: string; line: string };
 type Ripple = { index: number; time: number };
@@ -264,7 +265,10 @@ export default function Keyboard3D({ skills, onChange }: { skills: Skill[]; onCh
   }, []);
 
   const press = (i: number, user = true) => {
-    if (user) lastUser.current = clock.current;
+    if (user) {
+      lastUser.current = clock.current;
+      playKey(i); // sound only for the visitor's own presses (the demo stays silent)
+    }
     ripple.current = { index: i, time: clock.current };
     setActive(i);
     onChange(i);

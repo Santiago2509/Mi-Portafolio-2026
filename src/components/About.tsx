@@ -81,7 +81,7 @@ export default function About() {
 
         {/* Text */}
         <div>
-          <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-glow">
+          <p className="mb-6 flex items-center gap-3 text-[13px] uppercase tracking-[0.3em] text-glow">
             {about.kicker}
           </p>
           <p className="about-statement font-display text-[2rem] uppercase leading-[1.05] md:text-[3.4rem]">
@@ -94,7 +94,7 @@ export default function About() {
           <div className="about-facts mt-14 grid grid-cols-1 gap-6 border-t border-bone/10 pt-8 sm:grid-cols-3">
             {about.facts.map((f) => (
               <div key={f.k} className="about-fact">
-                <p className="text-[11px] uppercase tracking-[0.25em] text-mute">{f.k}</p>
+                <p className="text-[13px] uppercase tracking-[0.25em] text-mute">{f.k}</p>
                 <p className="mt-2 font-serif text-xl italic text-bone md:text-2xl">{f.v}</p>
               </div>
             ))}

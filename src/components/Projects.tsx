@@ -65,7 +65,7 @@ export default function Projects() {
       <div ref={track} className="flex flex-col gap-16 px-5 py-24 md:h-full md:w-max md:flex-row md:items-center md:gap-10 md:px-10 md:py-0">
         {/* Intro panel */}
         <div className="flex shrink-0 flex-col justify-center md:w-[38vw] md:pr-10">
-          <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-glow">
+          <p className="mb-6 flex items-center gap-3 text-[13px] uppercase tracking-[0.3em] text-glow">
             Proyectos
           </p>
           <h2 className="font-display text-6xl uppercase leading-[0.9] md:text-[7vw]">
@@ -73,10 +73,10 @@ export default function Projects() {
             <br />
             <span className="font-serif normal-case italic text-glow">habla</span> solo
           </h2>
-          <p className="mt-6 max-w-sm text-sm leading-relaxed text-bone/78">
+          <p className="mt-6 max-w-sm text-[15px] leading-relaxed text-bone/78">
             Una selección de lo que he construido. Desliza para ver cada uno.
           </p>
-          <span className="mt-10 hidden items-center gap-3 text-xs uppercase tracking-[0.3em] text-bone/72 md:flex">
+          <span className="mt-10 hidden items-center gap-3 text-[13px] uppercase tracking-[0.3em] text-bone/72 md:flex">
             Scroll <span className="inline-block h-px w-16 bg-bone/30" /> →
           </span>
         </div>
@@ -101,13 +101,13 @@ export default function Projects() {
                 <span className="font-display text-4xl text-glow">0{i + 1}</span>
                 <div>
                   <h3 className="font-display text-2xl uppercase tracking-wide">{p.title}</h3>
-                  <p className="text-xs uppercase tracking-[0.2em] text-mute">
+                  <p className="text-[13px] uppercase tracking-[0.2em] text-mute">
                     {p.category} · {p.year}
                   </p>
-                  <p className="mt-3 max-w-md text-sm text-bone/78">{p.description}</p>
+                  <p className="mt-3 max-w-md text-[15px] text-bone/78">{p.description}</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {p.tags.map((t) => (
-                      <span key={t} className="rounded-full border border-bone/15 px-3 py-1 text-[10px] uppercase tracking-widest text-bone/82">
+                      <span key={t} className="rounded-full border border-bone/15 px-3 py-1 text-[12px] uppercase tracking-widest text-bone/82">
                         {t}
                       </span>
                     ))}

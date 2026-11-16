@@ -22,7 +22,7 @@ function Tool({ id }: { id: string }) {
       <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0 transition-transform duration-300 group-hover:scale-125" fill={color} aria-hidden>
         <path d={icon.path} />
       </svg>
-      <span className="truncate text-sm text-bone/80 group-hover:text-bone">{icon.title}</span>
+      <span className="truncate text-[15px] text-bone/80 group-hover:text-bone">{icon.title}</span>
     </li>
   );
 }
@@ -76,7 +76,7 @@ export default function Skills() {
     <section ref={root} id="skills" className="relative overflow-hidden bg-ink px-5 py-24 md:px-10 md:py-36">
       <div className="pointer-events-none absolute left-1/2 top-1/4 h-[60vmin] w-[60vmin] -translate-x-1/2 rounded-full bg-accent/20 blur-[140px]" />
       <div className="relative mx-auto max-w-[1400px]">
-        <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-glow">
+        <p className="mb-6 flex items-center gap-3 text-[13px] uppercase tracking-[0.3em] text-glow">
           Herramientas
         </p>
         <div className="grid items-center gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
@@ -87,7 +87,7 @@ export default function Skills() {
                 de <span className="font-serif normal-case italic text-glow">herramientas</span>
               </span>
             </h2>
-            <p className="mt-6 max-w-sm text-sm text-bone/78">
+            <p className="mt-6 max-w-sm text-[15px] text-bone/78">
               Toca una tecla (o escribe en tu teclado) para ver qué hago con cada una. Si no tocas nada, se
               presentan solas.
             </p>
@@ -97,19 +97,19 @@ export default function Skills() {
             >
               {s ? (
                 <p ref={line}>
-                  <span className="block text-xs uppercase tracking-[0.3em]" style={{ color: sColor }}>
+                  <span className="block text-[13px] uppercase tracking-[0.3em]" style={{ color: sColor }}>
                     {s.name}
                   </span>
                   <span className="mt-2 block font-serif text-3xl italic text-bone md:text-4xl">“{s.line}”</span>
                 </p>
               ) : (
-                <p className="text-xs uppercase tracking-[0.3em] text-bone/65">↳ Presiona una tecla</p>
+                <p className="text-[13px] uppercase tracking-[0.3em] text-bone/65">↳ Presiona una tecla</p>
               )}
             </div>
             <button
               onClick={() => setOpen((o) => !o)}
               aria-expanded={open}
-              className="group mt-8 inline-flex items-center gap-3 rounded-full border border-bone/20 py-2 pl-6 pr-2 text-xs font-semibold uppercase tracking-[0.2em] text-bone transition-colors hover:border-accent hover:bg-accent"
+              className="group mt-8 inline-flex items-center gap-3 rounded-full border border-bone/20 py-2 pl-6 pr-2 text-[13px] font-semibold uppercase tracking-[0.2em] text-bone transition-colors hover:border-accent hover:bg-accent"
             >
               {open ? "Ocultar" : `Ver las ${total} herramientas`}
               <span
@@ -131,7 +131,7 @@ export default function Skills() {
               <div key={c.category}>
                 <h3 className="mb-4 flex items-baseline justify-between border-b border-bone/10 pb-3">
                   <span className="font-display text-2xl uppercase tracking-wide text-bone">{c.category}</span>
-                  <span className="text-[11px] tracking-[0.2em] text-mute">{String(c.items.length).padStart(2, "0")}</span>
+                  <span className="text-[13px] tracking-[0.2em] text-mute">{String(c.items.length).padStart(2, "0")}</span>
                 </h3>
                 <ul className="grid grid-cols-2 gap-2">
                   {c.items.map((id) => (
@@ -149,7 +149,7 @@ export default function Skills() {
             <h3 className="font-display text-5xl uppercase leading-none md:text-7xl">
               Lo que <span className="font-serif normal-case italic text-glow">hago</span>
             </h3>
-            <p className="text-xs uppercase tracking-[0.3em] text-bone/65">Arrastra y lanza ↓</p>
+            <p className="text-[13px] uppercase tracking-[0.3em] text-bone/65">Arrastra y lanza ↓</p>
           </div>
           <div className="mt-6 rounded-2xl border border-bone/10 bg-coal/60">
             <PhysicsPills items={services} />
